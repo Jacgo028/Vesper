@@ -1,0 +1,4 @@
+<Project>
+  <!-- 与正式交付物共用同一个版本号来源 -->
+  <Import Project="$(MSBuildThisFileDirectory)..\Version.props" />
+</Project>

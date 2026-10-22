@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <UseWPF>true</UseWPF>
+    <!-- Keep the test-only fixture in the caller's configuration even outside the solution. -->
+    <ShouldUnsetParentConfigurationAndPlatform>false</ShouldUnsetParentConfigurationAndPlatform>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="[8.0.0]" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <!-- UseWPF 会把隐式 using 换成 WPF 那套，这两个需要显式补回来 -->
+    <Using Include="System.IO" />
+    <Using Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UnityTranslator.App\UnityTranslator.App.csproj" />
+    <ProjectReference Include="..\OcrWorkerUtf8Fixture\OcrWorkerUtf8Fixture.csproj" ReferenceOutputAssembly="false" />
+    <Compile Include="..\..\packaging\BundleInventory.cs" Link="Packaging\BundleInventory.cs" />
+  </ItemGroup>
+
+  <Target Name="CopyOcrWorkerUtf8Fixture" AfterTargets="Build">
+    <ItemGroup>
+      <OcrWorkerUtf8Files Include="$(MSBuildProjectDirectory)\..\OcrWorkerUtf8Fixture\bin\$(Configuration)\$(TargetFramework)\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OcrWorkerUtf8Files)" DestinationFiles="@(OcrWorkerUtf8Files->'$(TargetDir)OcrWorkerUtf8Fixture\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

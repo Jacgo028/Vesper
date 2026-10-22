@@ -1,0 +1,17 @@
+版本：V0.5.9
+生成日期：2026-10-18（加载器、游戏插件与 OCR 组件沿用已核验的 V0.5.8 交付内容；本次修复桌面端）
+
+Unity Translator includes BepInEx 5.4.23.3 and 6.0.0-be.788 (LGPL-2.1), and UnityDoorstop (LGPL-2.1).
+Official source and license: https://github.com/BepInEx/BepInEx and https://github.com/NeighTools/UnityDoorstop
+BepInEx 5 archive: https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.3/BepInEx_win_x64_5.4.23.3.zip
+SHA-256: 41A089E5B1B1F0713B331346BAF6677B1184C69EABEBF51101097954E854C749
+BepInEx 6 archive: https://builds.bepinex.dev/projects/bepinex_be/788/BepInEx-Unity.Mono-win-x64-6.0.0-be.788%2B5b766a3.zip
+SHA-256: D7455185E8A0A01EB122947C59229F3FFCCEED853FEBD4707C08219743D8F477
+Offline OCR: Tesseract 5.5.0.20241111 (Apache-2.0), Windows installer:
+https://github.com/tesseract-ocr/tesseract/releases/download/5.5.0/tesseract-ocr-w64-setup-5.5.0.20241111.exe
+Installer SHA-256: F3FC4236425B690C8BE756F35793F77394EE004BE0A6460A440C754D892F68BC
+OCR models from https://github.com/tesseract-ocr/tessdata_fast (Apache-2.0):
+jpn SHA-256: 1F5DE9236D2E85F5FDF4B3C500F2D4926F8D9449F28F5394472D9E8D83B91B4D
+eng SHA-256: 7D4322BD2A7749724879683FC3912CB542F19906C83BCC1A52132556427170B2
+
+External window capture: Vortice.Direct3D11/DXGI/DirectX 3.6.2, Vortice.Mathematics 1.9.2 and SharpGen.Runtime/COM 2.2.0-beta (MIT). Copyright Alexandre Mutel, Jeremy Koritzinsky and Amer Koleci. Microsoft.Windows.SDK.NET.Ref10.0.19041.56 supplies Microsoft.Windows.SDK.NET and WinRT.Runtime under its SDK license. Full texts/provenance: licenses/external-ocr/PROVENANCE.md. Capture-visible OCR repair candidate; delivery acceptance remains incomplete.

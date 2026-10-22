@@ -1,0 +1,47 @@
+# Build and editor state
+**/bin/
+**/obj/
+.vs/
+.idea/
+.vscode/
+**/TestResults/
+**/logs/
+/outputs/
+/artifacts/
+**/out-*/
+*.user
+*.suo
+*.cache
+*.log
+*.trx
+*.tmp
+*.dll
+*.exe
+*.pdb
+*.zip
+
+# User configuration and credentials
+.env
+.env.*
+!.env.example
+**/settings.json
+**/games.json
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.CT
+*.ct
+*.pem
+*.key
+*.pfx
+
+# External runtime/game inputs; acquire separately
+/packages/
+/ocr/
+**/Managed/
+**/interop/
+*.traineddata
+*.ttf
+*.otf

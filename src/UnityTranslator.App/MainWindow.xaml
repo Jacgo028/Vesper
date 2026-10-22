@@ -1,0 +1,1324 @@
+<Window x:Class="UnityTranslator.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:UnityTranslator.App"
+        Title="Vesper暮星" Icon="Assets/vesper.ico" Width="1200" Height="800" MinWidth="900" MinHeight="640"
+        FontFamily="Microsoft YaHei UI" FontSize="13"
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme.xaml"/>
+                <ResourceDictionary Source="Assets/UiIcons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:GameIconConverter x:Key="GameIconSource"/>
+            <Style x:Key="LibrarySidebarItem" TargetType="ListBoxItem" BasedOn="{StaticResource ServiceSidebarItem}">
+                <Setter Property="Padding" Value="12,10"/>
+            </Style>
+            <Style x:Key="LibrarySearchInput" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="Padding" Value="33,7,9,7"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{StaticResource RadiusControl}">
+                                <!-- TextBox applies Padding to its text view; do not repeat it as host margin. -->
+                                <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource BorderAccent}"/>
+                                    <Setter TargetName="Bd" Property="BorderThickness" Value="2"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource BgWindow}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextMuted}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <BitmapImage x:Key="BingLogoBitmap" UriSource="Assets/bing-mark.png"/>
+            <CroppedBitmap x:Key="BingServiceMark" Source="{StaticResource BingLogoBitmap}" SourceRect="308,321,564,785"/>
+            <DataTemplate x:Key="ServiceNavigationContent">
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="20" Height="20" Margin="0,0,14,0"
+                            Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ListBoxItem}}">
+                        <Border.OpacityMask><ImageBrush ImageSource="{Binding Tag, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Stretch="Uniform"/></Border.OpacityMask>
+                    </Border>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ServiceModeContent">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="26" Height="26" Margin="0,0,16,0"
+                           Source="{Binding Tag, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <!-- Segoe MDL2 Assets 是 Windows 自带的标准图标库，不分发字体文件。 -->
+            <Style x:Key="LibraryUiIcon" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="IsHitTestVisible" Value="False"/>
+            </Style>
+            <Style x:Key="LibraryRowMenuItem" TargetType="MenuItem">
+                <Setter Property="Foreground" Value="{DynamicResource TextOnInput}"/>
+                <Setter Property="Padding" Value="12,8"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuItem">
+                            <Border x:Name="MenuSurface" Background="Transparent" Padding="{TemplateBinding Padding}" CornerRadius="4">
+                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsHighlighted" Value="True"><Setter TargetName="MenuSurface" Property="Background" Value="{DynamicResource BgPopupHover}"/></Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions><Condition Property="IsHighlighted" Value="True"/><Condition Property="Tag" Value="LibraryRemove"/></MultiTrigger.Conditions>
+                                    <Setter TargetName="MenuSurface" Property="Background" Value="{DynamicResource LibraryRemoveHover}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions><Condition Property="IsPressed" Value="True"/><Condition Property="Tag" Value="LibraryRemove"/></MultiTrigger.Conditions>
+                                    <Setter TargetName="MenuSurface" Property="Background" Value="{DynamicResource LibraryRemovePressed}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="MenuSurface" Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextOnInputMuted}"/>
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ControlTemplate x:Key="LibraryRowContextMenuTemplate" TargetType="ContextMenu">
+                <!-- The platform template paints its own icon gutter independently of Background. -->
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
+                        CornerRadius="{StaticResource RadiusControl}" SnapsToDevicePixels="True">
+                    <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
+            <DataTemplate x:Key="ThemeModeContent">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="ThemeGlyph" Text="&#xE706;" Style="{StaticResource LibraryUiIcon}"
+                               Foreground="{DynamicResource InputIcon}" Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding}" Value="黑夜">
+                        <Setter TargetName="ThemeGlyph" Property="Text" Value="&#xE708;"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="跟随系统">
+                        <Setter TargetName="ThemeGlyph" Property="Text" Value="&#xE770;"/>
+                        <Setter TargetName="ThemeGlyph" Property="FontSize" Value="16"/>
+                        <Setter TargetName="ThemeGlyph" Property="Margin" Value="0,0,7,0"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <DataTemplate x:Key="GameActionContent">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock x:Name="ActionGlyph" Text="&#xE768;" Style="{StaticResource LibraryUiIcon}"
+                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                               Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding}" Value="安装翻译组件">
+                        <Setter TargetName="ActionGlyph" Property="Text" Value="&#xE896;"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="一键更新并启动">
+                        <Setter TargetName="ActionGlyph" Property="Text" Value="&#xE72C;"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="暂不支持">
+                        <Setter TargetName="ActionGlyph" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <DataTemplate x:Key="LibraryManageActionContent">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="ManageGlyph" Text="&#xE70F;" Style="{StaticResource LibraryUiIcon}" FontSize="15"
+                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,6,0"/>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding}" Value="打开文件夹"><Setter TargetName="ManageGlyph" Property="Text" Value="&#xE838;"/></DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="移出游戏库"><Setter TargetName="ManageGlyph" Property="Text" Value="&#xE74D;"/></DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <DataTemplate x:Key="ApiSettingsContent">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE713;" Style="{StaticResource LibraryUiIcon}" FontSize="17"
+                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ScanActionContent">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE72C;" Style="{StaticResource LibraryUiIcon}" FontSize="17"
+                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,9,0"/>
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </DataTemplate>
+            <Style x:Key="TopNavigationItem" TargetType="ListBoxItem">
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Padding" Value="18,0"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Border x:Name="SelectionLine" Height="3" VerticalAlignment="Bottom"
+                                        Background="{DynamicResource Accent}" Visibility="Collapsed"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+                                    <Setter Property="Background" Value="{DynamicResource BgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter TargetName="SelectionLine" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource BgHover}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="LibraryGameItem" TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="10,10,8,10"/>
+                <Setter Property="Margin" Value="0,0,0,2"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource BgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource BgSelected}"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentSoft}"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="PreferenceSwitch" TargetType="CheckBox">
+                <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="CheckBox">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Margin="0,0,18,0"
+                                                  VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True"/>
+                                <Border x:Name="SwitchTrack" Grid.Column="1" Width="44" Height="24"
+                                        CornerRadius="12" Background="{DynamicResource SwitchTrackOff}"
+                                        VerticalAlignment="Center">
+                                    <Border x:Name="SwitchThumb" Width="18" Height="18"
+                                            CornerRadius="9" Background="{DynamicResource SwitchThumbOff}"
+                                            HorizontalAlignment="Left" Margin="3"/>
+                                </Border>
+                                <!-- Focus must not shrink the track's content slot and clip its 18-DIP thumb. -->
+                                <Border x:Name="SwitchFocusRing" Grid.Column="1" Width="44" Height="24"
+                                        CornerRadius="12" BorderThickness="2" BorderBrush="Transparent"
+                                        VerticalAlignment="Center" IsHitTestVisible="False"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="SwitchTrack" Property="Background" Value="{DynamicResource Accent}"/>
+                                    <Setter TargetName="SwitchThumb" Property="Background" Value="{DynamicResource TextOnAccent}"/>
+                                    <Setter TargetName="SwitchThumb" Property="HorizontalAlignment" Value="Right"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="SwitchTrack" Property="Opacity" Value="0.84"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="SwitchFocusRing" Property="BorderBrush" Value="{DynamicResource AccentText}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="OcrPreferenceSwitch" TargetType="CheckBox" BasedOn="{StaticResource PreferenceSwitch}">
+                <Style.Triggers>
+                    <!-- Keep this disabled row's explanation fully readable. -->
+                    <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="1"/></Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+        </Style>
+    </Window.Style>
+
+    <Grid Background="{DynamicResource BgWindow}" ClipToBounds="True"
+          TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+          UseLayoutRounding="True" SnapsToDevicePixels="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="168"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource BgHeader}"
+                BorderBrush="{DynamicResource BorderSoft}" BorderThickness="0,0,0,1">
+            <Grid Margin="22,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image x:Name="BrandMarkImage" Source="Assets/vesper-mark.png" Width="32" Height="32"
+                           Stretch="Uniform" Margin="0,0,9,0" AutomationProperties.Name="Vesper暮星标志"/>
+                    <TextBlock Text="Vesper暮星" FontSize="20" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                <ComboBox x:Name="ThemeModeBox" Grid.Column="2" Width="128" Margin="12,0,0,0"
+                          VerticalAlignment="Center" SelectionChanged="OnThemeSelectionChanged"
+                          ToolTip="切换界面外观" AutomationProperties.Name="界面主题">
+                    <ComboBoxItem Tag="Light" Content="白天" ContentTemplate="{StaticResource ThemeModeContent}"/>
+                    <ComboBoxItem Tag="Dark" Content="黑夜" ContentTemplate="{StaticResource ThemeModeContent}"/>
+                    <ComboBoxItem Tag="System" Content="跟随系统" ContentTemplate="{StaticResource ThemeModeContent}"/>
+                </ComboBox>
+            </Grid>
+        </Border>
+
+        <Border x:Name="NavigationSidebar" Grid.Row="1" Background="{DynamicResource BgSidebar}"
+                BorderBrush="{DynamicResource BorderSoft}" BorderThickness="0,0,1,0">
+            <ListBox x:Name="NavList" Margin="12,22,12,12"
+                     Background="Transparent" BorderThickness="0" Padding="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     ItemContainerStyle="{StaticResource LibrarySidebarItem}"
+                     SelectionChanged="OnNavSelectionChanged">
+                <ListBoxItem Content="游戏翻译" Tag="{DynamicResource IconGame}"
+                             ContentTemplate="{StaticResource ServiceNavigationContent}"/>
+                <ListBoxItem Content="数值工具" Tag="{DynamicResource IconTune}"
+                             ContentTemplate="{StaticResource ServiceNavigationContent}"/>
+                <ListBoxItem Content="游戏数值推荐" Visibility="Collapsed"/>
+                <ListBoxItem x:Name="TranslationServicesNavItem" Content="翻译服务" Tag="{DynamicResource IconTranslate}"
+                             ContentTemplate="{StaticResource ServiceNavigationContent}"/>
+            </ListBox>
+        </Border>
+
+        <TabControl x:Name="WorkspaceTabs" Grid.Row="1" Grid.Column="1" Background="Transparent"
+                    BorderThickness="0" Padding="0" Margin="0"
+                    SelectionChanged="OnWorkspaceTabChanged">
+            <TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <ContentPresenter ContentSource="SelectedContent"/>
+                </ControlTemplate>
+            </TabControl.Template>
+
+            <!-- 游戏库与当前游戏共享一屏；详情可以独立滚动。 -->
+            <TabItem Header="游戏翻译">
+                <Grid x:Name="GameLibraryPage" Background="Transparent" AllowDrop="True"
+                      PreviewDragEnter="OnLibraryDragEnter" PreviewDragOver="OnDragOver" PreviewDrop="OnDrop"
+                      LayoutUpdated="OnLibraryDropLayoutUpdated">
+                <Grid Margin="16,18,16,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="GameLibraryColumn" Width="55*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="45*" MinWidth="280"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border x:Name="LibraryTablePanel" Grid.Column="0" BorderBrush="{DynamicResource BorderSoft}"
+                            BorderThickness="0,0,1,0" Padding="0,0,8,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="游戏库" Style="{StaticResource SectionTitle}" FontSize="22"
+                                       Margin="6,2,0,12"/>
+                            <Grid x:Name="LibraryToolbar" Grid.Row="1" Margin="0,0,4,17">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <TextBox x:Name="LibrarySearchBox" TextChanged="OnLibrarySearchChanged" MaxLength="100"
+                                             Style="{StaticResource LibrarySearchInput}" AutomationProperties.Name="搜索游戏"
+                                             ToolTip="按游戏名称搜索；清空以显示全部游戏"/>
+                                    <TextBlock Text="&#xE721;" Style="{StaticResource LibraryUiIcon}" FontSize="17"
+                                               Foreground="{DynamicResource InputIcon}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    <TextBlock Text="搜索游戏" Foreground="{DynamicResource TextOnInputMuted}"
+                                               VerticalAlignment="Center" Margin="33,0,0,0" IsHitTestVisible="False">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers><DataTrigger Binding="{Binding Text, ElementName=LibrarySearchBox}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                                <Button Grid.Column="1" Click="OnBrowseFile" Height="36"
+                                        Style="{StaticResource LibraryPrimaryButton}" Padding="10,7" Margin="8,0,6,0"
+                                        ToolTip="选择游戏程序" AutomationProperties.Name="添加游戏">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE710;" Style="{StaticResource LibraryUiIcon}" FontSize="16" Margin="0,0,6,0"
+                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                        <TextBlock Text="添加游戏" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="2" Click="OnBrowseFolder" Height="36"
+                                        Style="{StaticResource LibrarySecondaryButton}" Padding="9,7" ToolTip="选择游戏文件夹" AutomationProperties.Name="文件夹">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE838;" Style="{StaticResource LibraryUiIcon}" FontSize="15" Margin="0,0,6,0"
+                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                        <TextBlock Text="文件夹" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                            <Grid x:Name="LibraryTableHeader" Grid.Row="2" Margin="0,0,4,0" Background="Transparent">
+                                <!-- Match each row's border/padding, icon slot, and action column. -->
+                                <Grid Margin="11,0,9,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="56"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="28"/></Grid.ColumnDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Text="游戏名称" Style="{StaticResource Muted}" Margin="0,10,0,10"/>
+                                    <TextBlock Grid.Column="2" Text="引擎 / 后端 / 架构" Style="{StaticResource Muted}" Margin="0,10,0,10"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="3" Margin="0,0,4,0">
+                                <ListBox x:Name="GameLibraryList" ItemsSource="{Binding Games}"
+                                         SelectionChanged="OnLibrarySelectionChanged"
+                                         ItemContainerStyle="{StaticResource LibraryGameItem}"
+                                         Background="Transparent" BorderThickness="0" Padding="0"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         HorizontalContentAlignment="Stretch">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="56"/>
+                                                    <ColumnDefinition Width="1.2*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="28"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border x:Name="CompatChip" Width="52" Height="52"
+                                                        CornerRadius="4" Background="Transparent"
+                                                        VerticalAlignment="Center" ClipToBounds="True">
+                                                    <Image Source="{Binding ExePath, Converter={StaticResource GameIconSource}, FallbackValue={StaticResource IconGame}}"
+                                                           Width="48" Height="48" Stretch="Uniform"
+                                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                </Border>
+                                                <StackPanel Grid.Column="1" Margin="9,0,9,0" VerticalAlignment="Center" ToolTip="{Binding RootPath}">
+                                                    <TextBlock Text="{Binding DisplayName}" FontSize="14" ToolTip="{Binding DisplayName}"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextPrimary}"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Text="{Binding RootPath}" ToolTip="{Binding RootPath}" Style="{StaticResource Muted}"
+                                                               Visibility="Collapsed" Margin="0,5,0,0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="2" ToolTip="{Binding TechnicalSummary}"
+                                                           Foreground="{DynamicResource TextSecondary}" FontSize="11.5" VerticalAlignment="Center"
+                                                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Margin="0,0,7,0">
+                                                    <TextBlock.Text><MultiBinding StringFormat="Unity {0} · {1} · {2}"><Binding Path="UnityVersion"/><Binding Path="Backend"/><Binding Path="Architecture"/></MultiBinding></TextBlock.Text>
+                                                </TextBlock>
+                                                <Button Grid.Column="3" Tag="{Binding}" Click="OnLibraryRowMore" Style="{StaticResource LibraryGhostButton}"
+                                                        Padding="4,5" ToolTip="管理这款游戏" AutomationProperties.Name="管理这款游戏">
+                                                    <TextBlock Text="&#xE712;" Style="{StaticResource LibraryUiIcon}" FontSize="16"
+                                                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                                    <Button.ContextMenu>
+                                                        <ContextMenu Background="{DynamicResource BgPopup}" Foreground="{DynamicResource TextOnInput}"
+                                                                     Template="{StaticResource LibraryRowContextMenuTemplate}"
+                                                                     BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Padding="4"
+                                                                     ItemContainerStyle="{StaticResource LibraryRowMenuItem}">
+                                                            <MenuItem Header="重命名" Click="OnLibraryRowRename"/>
+                                                            <MenuItem Header="打开文件夹" Click="OnLibraryRowOpenFolder"/>
+                                                            <MenuItem Header="移出游戏库" Click="OnLibraryRowRemove" Tag="LibraryRemove"/>
+                                                        </ContextMenu>
+                                                    </Button.ContextMenu>
+                                                </Button>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <TextBlock x:Name="GameListEmptyHint" Text="添加一款游戏，开始翻译。"
+                                           Style="{StaticResource Hint}" TextWrapping="Wrap"
+                                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                                           TextAlignment="Center" Margin="16,28,16,0"
+                                           IsHitTestVisible="False"/>
+                            </Grid>
+                            <Border x:Name="DropZone" Grid.Row="4" MinHeight="44" Padding="8,8"
+                                    Background="{DynamicResource BgWindow}"
+                                    BorderBrush="{DynamicResource BorderStrong}" BorderThickness="0"
+                                    CornerRadius="6" Margin="0,14,4,0">
+                                <Grid>
+                                    <StackPanel x:Name="DropHintPanel" VerticalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock x:Name="DropIcon" Text="&#xE946;" Style="{StaticResource LibraryUiIcon}" FontSize="15"
+                                                   Foreground="{DynamicResource TextMuted}" Margin="0,0,8,0"/>
+                                        <TextBlock x:Name="DropTitle" Text="将 .exe 或游戏文件夹拖到本页即可添加"
+                                                   FontSize="11" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="DropResultPanel" VerticalAlignment="Center"
+                                                Visibility="Collapsed" Opacity="0" IsHitTestVisible="False">
+                                        <TextBlock x:Name="DropResultIcon" Visibility="Collapsed"
+                                                   Foreground="{DynamicResource TextPrimary}"/>
+                                        <TextBlock x:Name="DropResultTitle" FontSize="11.5" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextPrimary}"
+                                                   TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="DropResultDetail" Style="{StaticResource Muted}"
+                                                   Margin="0,3,0,0" TextWrapping="Wrap"/>
+                                        <Button x:Name="DismissDropFeedbackButton" Content="关闭提示" Click="OnDismissDropFeedback"
+                                                Style="{StaticResource SecondaryButton}" FontSize="11" Padding="6,3"
+                                                HorizontalAlignment="Left" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <ScrollViewer x:Name="GameScrollViewer" Grid.Column="2"
+                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                  Padding="0,0,7,8">
+                        <StackPanel x:Name="GameDetailPanel">
+                            <Border x:Name="SelectedGameArtwork" Height="142" CornerRadius="6">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="Assets/library-landscape.png" Stretch="UniformToFill"/>
+                                </Border.Background>
+                            </Border>
+                                <TextBlock x:Name="SelectedGameTitle" Text="请选择游戏"
+                                           FontSize="27" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextPrimary}"
+                                           Margin="0,12,0,3" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+                            <TextBlock x:Name="SelectedGameInfo" Text="添加游戏后，这里会显示游戏信息。"
+                                       Style="{StaticResource Hint}" FontSize="12.5" Margin="0,3,0,12"/>
+                            <TextBlock x:Name="SelectedComponentStatus" Text="从左侧游戏库选择一款游戏"
+                                       Foreground="{DynamicResource TextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,12"/>
+                            <Button x:Name="SelectedGameActionButton" Content="启动游戏"
+                                    ContentTemplate="{StaticResource GameActionContent}"
+                                    Tag="{Binding SelectedItem, ElementName=GameLibraryList}"
+                                    Click="OnSelectedGameAction" IsEnabled="False"
+                                    Style="{StaticResource LibraryPrimaryButton}" FontSize="16"
+                                    Padding="14,10" BorderThickness="0" HorizontalAlignment="Stretch"/>
+                            <WrapPanel x:Name="LibraryManagementActions" Margin="0,10,0,0">
+                                <Button x:Name="RenameLibraryGameButton" Content="重命名" Click="OnRenameLibraryGame"
+                                        ContentTemplate="{StaticResource LibraryManageActionContent}"
+                                        Style="{StaticResource LibrarySecondaryButton}" Padding="8,5" Margin="0,0,6,6" IsEnabled="False"/>
+                                <Button x:Name="OpenLibraryFolderButton" Content="打开文件夹" Click="OnOpenLibraryFolder"
+                                        ContentTemplate="{StaticResource LibraryManageActionContent}"
+                                        Style="{StaticResource LibrarySecondaryButton}" Padding="8,5" Margin="0,0,6,6" IsEnabled="False"/>
+                                <Button x:Name="RemoveLibraryGameButton" Content="移出游戏库" Click="OnRemoveLibraryGame"
+                                        ContentTemplate="{StaticResource LibraryManageActionContent}"
+                                        Style="{StaticResource LibraryRemoveButton}" Padding="8,5" Margin="0,0,0,6" IsEnabled="False"
+                                        ToolTip="只移除列表记录，不删除游戏、存档或翻译组件"/>
+                            </WrapPanel>
+                            <Border x:Name="LibraryRenamePanel" Visibility="Collapsed" Margin="3,8,0,0" Padding="10"
+                                    Background="{DynamicResource BgSubtle}" BorderBrush="{DynamicResource BorderSoft}"
+                                    BorderThickness="1" CornerRadius="6">
+                                <StackPanel>
+                                    <TextBlock Text="游戏名称（留空恢复程序名，最多 80 字）" Style="{StaticResource Hint}" Margin="0,0,0,6"/>
+                                    <TextBox x:Name="LibraryRenameBox" MaxLength="80" AutomationProperties.Name="游戏名称"/>
+                                    <WrapPanel Margin="0,8,0,0">
+                                        <Button x:Name="SaveLibraryNameButton" Content="保存名称" Click="OnSaveLibraryName"
+                                                Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                        <Button x:Name="CancelLibraryNameButton" Content="取消" Click="OnCancelLibraryName"
+                                                Style="{StaticResource GhostButton}"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border BorderBrush="{DynamicResource BorderSoft}" BorderThickness="0,1,0,0"
+                                    Margin="0,11,0,0" Padding="0,15,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="翻译偏好" Style="{StaticResource SectionTitle}" Margin="0,0,0,14"/>
+                                    <CheckBox x:Name="TranslationEnabledBox" IsChecked="True"
+                                              Style="{StaticResource PreferenceSwitch}"
+                                              AutomationProperties.Name="联网翻译">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="32"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="&#xE774;" Style="{StaticResource LibraryUiIcon}" FontSize="21"
+                                                       HorizontalAlignment="Left"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="联网翻译" FontSize="14" FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextPrimary}"/>
+                                                <TextBlock Text="关闭后游戏照常运行，数值工具不受影响"
+                                                           Style="{StaticResource Hint}" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </CheckBox>
+                                    <CheckBox x:Name="EnableOcrBox" IsChecked="True"
+                                              Checked="OnOcrChanged" Unchecked="OnOcrChanged"
+                                              Style="{StaticResource OcrPreferenceSwitch}" Margin="0,16,0,0"
+                                              AutomationProperties.Name="识别图片文字">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="32"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="&#xE8B9;" Style="{StaticResource LibraryUiIcon}" FontSize="21"
+                                                       HorizontalAlignment="Left"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="识别图片文字" FontSize="14" FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextPrimary}"/>
+                                                <TextBlock x:Name="OcrPreferenceHint" Text="使用本地 OCR 识别游戏内的图片文字，游戏内按 F9 切换"
+                                                           Style="{StaticResource Hint}" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </CheckBox>
+                                </StackPanel>
+                            </Border>
+                            <Border BorderBrush="{DynamicResource BorderSoft}" BorderThickness="0,1,0,1"
+                                    Padding="0,7" Margin="0,17,0,0">
+                                <DockPanel>
+                                    <Button x:Name="ManageTranslationServicesButton" DockPanel.Dock="Right"
+                                            Content="管理翻译服务" Click="OnEditTranslationSettings"
+                                            Style="{StaticResource GhostButton}" FontSize="11" Padding="6,5"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="&#xE71B;" Style="{StaticResource LibraryUiIcon}"
+                                               Width="24" FontSize="20" Margin="0,0,8,0"/>
+                                    <TextBlock x:Name="TranslationProviderSummary" Text="当前翻译：免费翻译 · 必应 Bing"
+                                               FontSize="13" FontWeight="SemiBold" TextWrapping="Wrap"
+                                               Foreground="{DynamicResource TextPrimary}"
+                                               VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                </DockPanel>
+                            </Border>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE946;" Style="{StaticResource LibraryUiIcon}" FontSize="17"
+                                           HorizontalAlignment="Left" Foreground="{DynamicResource TextMuted}"/>
+                                <TextBlock x:Name="TranslationSpeedNotice" Grid.Column="1"
+                                           Text="实时翻译速度将会取决于您选用的服务商以及您的网络"
+                                           Style="{StaticResource Hint}" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <Expander Header="组件管理与详情" Style="{StaticResource Disclosure}"
+                                      IsExpanded="False" Margin="0,14,0,0">
+                                <StackPanel Margin="0,8,0,0">
+                                    <WrapPanel>
+                                        <Button Content="安装 / 修复翻译组件" Click="OnSelectedGameInstall"
+                                                Tag="{Binding SelectedItem, ElementName=GameLibraryList}"
+                                                Style="{StaticResource SecondaryButton}" Margin="0,0,8,6"/>
+                                        <Button Content="卸载翻译组件" Click="OnSelectedGameUninstall"
+                                                Tag="{Binding SelectedItem, ElementName=GameLibraryList}"
+                                                Style="{StaticResource GhostButton}" Margin="0,0,0,6"/>
+                                    </WrapPanel>
+                                    <TextBlock x:Name="SelectedGameTechnical" Text="选择游戏后显示技术详情。"
+                                               Style="{StaticResource TechnicalText}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Expander>
+
+                            <StackPanel Margin="3,13,0,0">
+                                <DockPanel>
+                                    <Border x:Name="StatusDot" DockPanel.Dock="Left"
+                                            Style="{StaticResource StatusSquare}" Margin="0,0,7,0"/>
+                                    <TextBlock x:Name="ServiceStatus" Text="还没有启动游戏。"
+                                               Style="{StaticResource Hint}"
+                                               Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap"/>
+                                </DockPanel>
+                                <TextBlock x:Name="StatusSuggestion" Style="{StaticResource Hint}"
+                                           Foreground="{DynamicResource Warning}" Margin="15,5,0,0"
+                                           TextWrapping="Wrap" Visibility="Collapsed"/>
+                                <TextBlock x:Name="StatusTechnical" Style="{StaticResource TechnicalText}"
+                                           Margin="15,5,0,0" Visibility="Collapsed"/>
+                            </StackPanel>
+
+                            <Expander Header="修改最近一次译文" Style="{StaticResource Disclosure}"
+                                      IsExpanded="False" Margin="3,14,0,0">
+                                <StackPanel Margin="0,8,0,0">
+                                    <TextBlock Text="保存后，再次遇到同样的原文会优先使用你的修改。"
+                                               Style="{StaticResource Hint}" Margin="0,0,0,8"/>
+                                    <DockPanel>
+                                        <Button DockPanel.Dock="Right" Content="保存修改" Click="OnSaveCorrection"
+                                                Style="{StaticResource SecondaryButton}" Margin="8,0,0,0"/>
+                                        <TextBox x:Name="CorrectionBox" MinWidth="180"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Expander>
+                            <TextBlock Text="游戏内按 F8 暂停或恢复文字替换。" Style="{StaticResource Muted}"
+                                       Margin="3,15,0,0"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                </Grid>
+            </TabItem>
+
+                    <!-- ================== 页面 2：数值修改 ================== -->
+                    <TabItem Header="数值修改">
+                        <ScrollViewer x:Name="NumbersScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                      Padding="{StaticResource PageMargin}">
+                            <StackPanel>
+                                <TextBlock Text="数值工具" Style="{StaticResource PageTitle}"/>
+                                <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,14"
+                                           Text="查找游戏数值，确认目标后修改或锁定。内置地址表，支持导入和导出 CE 数字表。"/>
+                                <WrapPanel Margin="0,0,0,16">
+                                    <Button x:Name="NumbersScanShortcut" Content="扫描设置" Tag="NumbersScanSection" Click="OnNumbersShortcut"
+                                            Style="{StaticResource ShortcutButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="NumbersResultsShortcut" Content="扫描结果" Tag="NumbersResultsSection" Click="OnNumbersShortcut"
+                                            Style="{StaticResource ShortcutButton}" Margin="0,0,8,0"/>
+                                    <Button x:Name="NumbersAddressShortcut" Content="地址表" Tag="NumbersAddressSection" Click="OnNumbersShortcut"
+                                            Style="{StaticResource ShortcutButton}"/>
+                                </WrapPanel>
+
+                                <Border x:Name="NumbersConnectionSummary" Margin="0,0,0,12">
+                                    <Border.Style>
+                                        <Style TargetType="Border" BasedOn="{StaticResource NoticeBox}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers><DataTrigger Binding="{Binding Visibility, ElementName=ScanEmptyState}" Value="Collapsed"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <DockPanel>
+                                        <Button DockPanel.Dock="Right" Content="连接正在运行的游戏" Click="OnConnectToRunningGame"
+                                                Style="{StaticResource GhostButton}" Padding="8,4" FontSize="12"/>
+                                        <Image Source="{DynamicResource IconGame}" Width="20" Height="20" Margin="0,0,12,0"/>
+                                        <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource TextPrimary}">
+                                            <Run Text="已连接 · "/><Run Text="{Binding Text, ElementName=SidebarGameName}"/>
+                                        </TextBlock>
+                                    </DockPanel>
+                                </Border>
+
+                                <!-- 空状态 -->
+                                <Border x:Name="ScanEmptyState" Style="{StaticResource NoticeBox}" Margin="0,0,0,12"
+                                        Background="{DynamicResource BgSubtle}" BorderBrush="{DynamicResource BorderSoft}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Style="{StaticResource NoticeAccentBar}" Background="{DynamicResource AccentText}"/>
+                                        <StackPanel>
+                                            <TextBlock x:Name="ScanEmptyTitle" Text="还没有启动游戏"
+                                                       FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                                            <TextBlock x:Name="ScanEmptyAdvice" Style="{StaticResource Hint}" Margin="0,4,0,0"
+                                                       Text="先到“游戏与翻译”页启动游戏，再回来这里查找数值。"/>
+                                            <StackPanel Orientation="Horizontal" Margin="0,9,0,0">
+                                                <Button x:Name="ScanGoToGameButton" Content="去启动游戏" Click="OnGoToGamePage"
+                                                        Style="{StaticResource SecondaryButton}" Padding="12,5"/>
+                                                <Button x:Name="ScanConnectRunningButton" Content="连接到正在运行的游戏"
+                                                        Click="OnConnectToRunningGame" Margin="8,0,0,0"
+                                                        Style="{StaticResource GhostButton}" Padding="12,5"
+                                                        ToolTip="游戏已经自己启动了？点这里直接连上它，不用重新启动。"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 步骤 1 -->
+                                <Border x:Name="NumbersScanSection" Style="{StaticResource NumbersSection}">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <Border Width="28" Height="28" CornerRadius="14" Background="{DynamicResource Accent}">
+                                                <TextBlock Text="1" Foreground="{DynamicResource TextOnAccent}" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Text="首次查找" Style="{StaticResource SectionTitle}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="16,0,0,10"
+                                                   Text="比如金币显示 1280，就填 1280。看不到具体数值的血条，选择“未知初始值”，变化后再按增加或减少筛选。"/>
+
+                                        <Grid Margin="16,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1.1*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="1.2*"/>
+                                                <ColumnDefinition Width="1.1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Margin="0,0,14,0"><TextBlock Text="查找方式" Style="{StaticResource Hint}" Margin="0,0,0,4"/>
+                                                <ComboBox x:Name="ScanInitialModeBox" SelectedIndex="0">
+                                                    <ComboBoxItem Content="精确等于"/><ComboBoxItem Content="未知初始值"/><ComboBoxItem Content="数值范围（含两端）"/>
+                                                    <ComboBoxItem Content="大于输入值"/><ComboBoxItem Content="小于输入值"/>
+                                                </ComboBox>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Margin="0,0,14,0">
+                                                <TextBlock Text="数值类型" Style="{StaticResource Hint}" Margin="0,0,0,4" TextWrapping="NoWrap"/>
+                                                <ComboBox x:Name="ScanKindBox" SelectedIndex="0">
+                                                    <ComboBoxItem Content="整数（没有小数点的数字）"/>
+                                                    <ComboBoxItem Content="很大的整数（超过 21 亿）"/>
+                                                    <ComboBoxItem Content="小数（例如 12.5）"/>
+                                                    <ComboBoxItem Content="很精确的小数"/>
+                                                </ComboBox>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2" Margin="0,0,14,0">
+                                                <TextBlock Text="当前数值" Style="{StaticResource Hint}" Margin="0,0,0,4" TextWrapping="NoWrap"/>
+                                                <TextBox x:Name="ScanValueBox" Text="100"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="3">
+                                                <TextBlock Text="范围上限" Style="{StaticResource Hint}" Margin="0,0,0,4"/>
+                                                <TextBox x:Name="ScanUpperValueBox" ToolTip="仅范围查找时使用"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <WrapPanel Margin="16,16,0,0">
+                                                <Button x:Name="ScanStartButton" Content="首次查找" Click="OnFirstScan"
+                                                        ContentTemplate="{StaticResource ScanActionContent}"
+                                                        Style="{StaticResource PrimaryButton}" MinWidth="180" Margin="0,0,12,0"/>
+                                                <Button x:Name="ScanCancelButton" Content="取消查找" Click="OnCancelScan"
+                                                        Style="{StaticResource GhostButton}" MinWidth="92" IsEnabled="False"/>
+                                        </WrapPanel>
+
+                                        <TextBlock x:Name="ScanTypeHint" Style="{StaticResource Hint}" Margin="16,9,0,0"
+                                                   Text="先按“整数”试。如果一种类型找不到，换另一种再来一次。"/>
+                                        <Expander Header="扫描范围与对齐" Style="{StaticResource Disclosure}" Margin="16,8,0,0">
+                                            <StackPanel Margin="0,8,0,0">
+                                                <WrapPanel><StackPanel Margin="0,0,10,0"><TextBlock Text="起始地址（十六进制，留空为全部）" Style="{StaticResource Hint}"/>
+                                                    <TextBox x:Name="ScanStartAddressBox" Width="250" Margin="0,4,0,0"/></StackPanel>
+                                                    <StackPanel><TextBlock Text="结束地址（十六进制，包含此地址）" Style="{StaticResource Hint}"/>
+                                                    <TextBox x:Name="ScanStopAddressBox" Width="250" Margin="0,4,0,0"/></StackPanel></WrapPanel>
+                                                <CheckBox x:Name="ScanAlignedBox" Content="按数值宽度对齐（更快；找不到时可关闭）" IsChecked="True" Margin="0,8,0,0"/>
+                                                <TextBlock Text="候选快照上限 256 MB；过宽时会明确停止，请缩小地址范围。列表最多显示前 5000 项，其余候选仍参与再次查找。" Style="{StaticResource Hint}" Margin="0,6,0,0"/>
+                                            </StackPanel>
+                                        </Expander>
+                                        <TextBlock x:Name="ScanProgressText" Style="{StaticResource Hint}" Margin="16,9,0,0"/>
+                                        <ProgressBar x:Name="ScanProgressBar" Height="3" Margin="16,7,0,0"
+                                                     Visibility="Collapsed" Foreground="{DynamicResource Accent}"
+                                                     Background="{DynamicResource BgWindow}" BorderThickness="0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 步骤 2：直接输入新数值再查找（不需要判断变化方向） -->
+                                <Border Style="{StaticResource NumbersSection}" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <Border Width="28" Height="28" CornerRadius="14" Background="{DynamicResource AccentSoft}">
+                                                <TextBlock Text="2" Foreground="{DynamicResource AccentText}" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Text="数值变化后，再次查找" Style="{StaticResource SectionTitle}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="16,0,0,10"
+                                                   Text="回游戏让数值变化，再填入当前值，点“再次查找”。重复筛选，直到只剩一两项。"/>
+
+                                        <Grid Margin="16,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1.6*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                                <TextBlock Text="游戏现在显示的新数值" Style="{StaticResource Hint}"
+                                                           Margin="0,0,0,4" TextWrapping="NoWrap"/>
+                                                <TextBox x:Name="ScanNewValueBox" MinWidth="100"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                                                <TextBlock Text="查找方式" Style="{StaticResource Hint}" Margin="0,0,0,4"/>
+                                                <ComboBox x:Name="ScanFilterBox" SelectedIndex="0">
+                                                    <ComboBoxItem Content="精确等于新数值"/><ComboBoxItem Content="比上次增加"/><ComboBoxItem Content="比上次减少"/>
+                                                    <ComboBoxItem Content="与上次不同"/><ComboBoxItem Content="与上次相同"/>
+                                                </ComboBox>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+                                                <Button x:Name="ScanRefineButton" Content="再次查找" Click="OnRefineScan"
+                                                        ContentTemplate="{StaticResource ScanActionContent}"
+                                                        Style="{StaticResource PrimaryButton}" MinWidth="104"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <TextBlock Style="{StaticResource Hint}" Margin="16,9,0,0"
+                                                   Text="默认只保留等于新数值的结果；也可以按相对上次扫描的增加、减少或变化筛选。类型自动沿用首次查找。"/>
+                                        <TextBlock x:Name="ScanResultSummary" Style="{StaticResource Hint}"
+                                                   Foreground="{DynamicResource AccentText}" Margin="16,7,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 步骤 3 -->
+                                <Border x:Name="NumbersResultsSection" Style="{StaticResource NumbersSection}" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="3" Style="{StaticResource StepNumber}"/>
+                                            <TextBlock Text="确认目标并修改" Style="{StaticResource SectionTitle}" Margin="8,0,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="16,0,0,10"
+                                                   Text="选中一项，再填入目标数值。修改后回游戏确认效果；选错时可撤销再换一项。"/>
+
+                                        <DataGrid x:Name="ScanResultList" ItemsSource="{Binding CheatHits}" Style="{StaticResource CheatGrid}" Height="170"
+                                                  SelectionChanged="OnScanSelectionChanged">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="地址（技术信息）" Binding="{Binding AddressText}" Width="160"/>
+                                                <DataGridTextColumn Header="数值类型" Binding="{Binding KindText}" Width="110"/>
+                                                <DataGridTextColumn Header="当前数值" Binding="{Binding CurrentValue}" Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <TextBlock x:Name="ScanResultEmptyHint" Style="{StaticResource Hint}" Margin="0,7,0,0"
+                                                   Text="结果会显示在这里。还没有结果时，请先做“首次查找”。"/>
+                                        <!-- 第二行：根据“还没查找 / 筛出 0 项 / 会话已断开”给不同的下一步 -->
+                                        <TextBlock x:Name="ScanResultHint" Style="{StaticResource Hint}" Margin="0,3,0,0"
+                                                   Text="第 1 步填游戏里现在显示的数值，“首次查找”会把这个数值在内存里出现的位置全部列出来。"/>
+
+                                        <Grid Margin="0,12,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="改成" Style="{StaticResource Hint}"
+                                                       VerticalAlignment="Center" Margin="0,0,8,0" TextWrapping="NoWrap"/>
+                                            <TextBox x:Name="ScanWriteValueBox" Grid.Column="1" MinWidth="110" Margin="0,0,10,0"/>
+                                            <Button x:Name="ScanWriteButton" Grid.Column="2" Content="修改" Click="OnWriteScannedValue"
+                                                    Style="{StaticResource PrimaryButton}" Margin="0,0,8,0" MinWidth="86"/>
+                                            <Button x:Name="ScanFreezeButton" Grid.Column="3" Content="锁定这个数值"
+                                                    Click="OnToggleFreeze" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0" MinWidth="112"/>
+                                            <Button x:Name="ScanUndoButton" Grid.Column="4" Content="撤销上次修改"
+                                                    Click="OnUndoCheatWrite" Style="{StaticResource GhostButton}" MinWidth="112"/>
+                                        </Grid>
+
+                                        <TextBlock Style="{StaticResource Hint}" Margin="0,9,0,0"
+                                                   Text="锁定会持续写回设定值。停止锁定或退出游戏后结束；重启游戏需要重新查找内存地址。"/>
+                                        <Button Content="把选中结果加入地址表" Click="OnAddScanToAddressTable" Style="{StaticResource SecondaryButton}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border x:Name="NumbersAddressSection" Style="{StaticResource NumbersSection}" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="4" Style="{StaticResource StepNumber}"/>
+                                            <TextBlock Text="地址表" Style="{StaticResource SectionTitle}" Margin="8,0,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,10" Text="保存地址与指针，同时锁定多项。.CT 导入仅支持数字与分组，不执行脚本或热键。"/>
+                                        <WrapPanel Margin="0,0,0,10">
+                                            <Button Content="导入 .CT" Click="OnImportCheatTable" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                            <Button Content="导出 .CT" Click="OnExportCheatTable" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                            <Button Content="刷新数值" Click="OnRefreshAddressTable" Style="{StaticResource GhostButton}" Margin="0,0,8,0"/>
+                                            <Button Content="移除选中项" Click="OnRemoveAddressEntry" Style="{StaticResource GhostButton}" Margin="0,0,8,0"/>
+                                            <Button Content="停止全部锁定" Click="OnStopAllAddressFreezes" Style="{StaticResource GhostButton}"/>
+                                        </WrapPanel>
+                                        <DataGrid x:Name="AddressTableList" Style="{StaticResource CheatGrid}" Height="190" SelectionChanged="OnAddressSelectionChanged">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="名称 / 分组" Binding="{Binding DisplayDescription}" Width="160"/>
+                                                <DataGridTextColumn Header="地址 / 指针" Binding="{Binding AddressText}" Width="*"/>
+                                                <DataGridTextColumn Header="类型" Binding="{Binding KindText}" Width="100"/>
+                                                <DataGridTextColumn Header="当前值" Binding="{Binding Value}" Width="100"/>
+                                                <DataGridTextColumn Header="锁定" Binding="{Binding StateText}" Width="75"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <WrapPanel Margin="0,10,0,0">
+                                            <TextBlock Text="新数值" Style="{StaticResource Hint}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                            <TextBox x:Name="AddressValueBox" Width="160" Margin="0,0,8,0"/>
+                                            <Button Content="修改选中项" Click="OnWriteAddressEntry" Style="{StaticResource PrimaryButton}" Margin="0,0,8,0"/>
+                                            <Button Content="锁定 / 解锁选中项" Click="OnFreezeAddressEntry" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0"/>
+                                            <Button Content="撤销地址表修改" Click="OnUndoAddressEntry" Style="{StaticResource GhostButton}"/>
+                                        </WrapPanel>
+                                        <Expander Header="手动添加地址或指针" Style="{StaticResource Disclosure}" Margin="0,10,0,0">
+                                            <StackPanel Margin="0,8,0,0">
+                                                <WrapPanel><StackPanel Margin="0,0,8,0"><TextBlock Text="名称" Style="{StaticResource Hint}"/><TextBox x:Name="AddressNameBox" Width="180" Margin="0,4,0,0"/></StackPanel>
+                                                    <StackPanel><TextBlock Text="地址（十六进制或模块名 + 偏移）" Style="{StaticResource Hint}"/><TextBox x:Name="AddressExpressionBox" Width="330" Margin="0,4,0,0"/></StackPanel></WrapPanel>
+                                                <WrapPanel Margin="0,8,0,0"><ComboBox x:Name="AddressKindBox" Width="170" SelectedIndex="0" Margin="0,0,8,0">
+                                                    <ComboBoxItem Content="整数"/><ComboBoxItem Content="很大的整数"/><ComboBoxItem Content="小数"/><ComboBoxItem Content="很精确的小数"/>
+                                                </ComboBox><TextBlock Text="指针偏移（十六进制，最外层在前，逗号分隔）" Style="{StaticResource Hint}" VerticalAlignment="Center"/></WrapPanel>
+                                                <WrapPanel Margin="0,8,0,0"><TextBox x:Name="AddressOffsetsBox" Width="330" Margin="0,0,8,0"/>
+                                                    <Button Content="添加到地址表" Click="OnAddManualAddress" Style="{StaticResource SecondaryButton}"/></WrapPanel>
+                                                <TextBlock Text="例如地址填 &quot;Game.exe&quot;+1234，偏移填 10,20；留空偏移表示普通地址。支持 4 字节、8 字节、单精度和双精度数值。" Style="{StaticResource Hint}" Margin="0,8,0,0"/>
+                                            </StackPanel>
+                                        </Expander>
+                                        <TextBlock x:Name="AddressTableStatus" Text="还没有地址。可从扫描结果添加，或手动添加 / 导入 .CT。" Style="{StaticResource Hint}" Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 快捷项 -->
+                                <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="快捷项" Style="{StaticResource SectionTitle}"/>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,9"
+                                                   Text="把常改的数值存下来，下次少点几步。游戏数值的快捷项下次启动会重新核对；内存查找的快捷项只记住搜索条件，重启后仍要重新查找。"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,9">
+                                            <TextBox x:Name="PresetNameBox" Width="220" Margin="0,0,8,0"/>
+                                            <Button Content="把当前选择存为快捷项" Click="OnSaveCheatPreset"
+                                                    Style="{StaticResource SecondaryButton}"/>
+                                        </StackPanel>
+                                        <ListBox x:Name="PresetList" Style="{StaticResource CheatList}" Height="100"
+                                                 SelectionChanged="OnPresetSelectionChanged"/>
+                                        <TextBlock x:Name="PresetEmptyHint" Style="{StaticResource Hint}" Margin="0,7,0,0"
+                                                   Text="还没有快捷项。选中一条结果或一个推荐字段后，就能保存。"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 状态 -->
+                                <Border Style="{StaticResource Card}" Margin="0,12,0,0" Padding="13">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border x:Name="CheatStatusDot" Style="{StaticResource StatusSquare}"/>
+                                            <TextBlock x:Name="CheatStatus" Style="{StaticResource Hint}" Margin="7,0,0,0"
+                                                       Foreground="{DynamicResource TextPrimary}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="CheatStatusAdvice" Style="{StaticResource Hint}"
+                                                   Foreground="{DynamicResource Warning}" Margin="15,5,0,0"
+                                                   TextWrapping="Wrap" Visibility="Collapsed"/>
+                                        <TextBlock x:Name="CheatStatusTechnical" Style="{StaticResource TechnicalText}"
+                                                   Margin="15,5,0,0" Visibility="Collapsed"/>
+                                        <TextBlock Style="{StaticResource Muted}" Margin="15,7,0,0" TextWrapping="Wrap"
+                                                   Text="找不到数值是正常的：不同游戏把数值存在不同位置，有些游戏还会加密或实时计算。换一种数值类型、换一个数值再试，通常能找到。"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ================== 页面 3：游戏数值推荐 ================== -->
+                    <TabItem Header="游戏数值推荐">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                      Padding="{StaticResource PageMargin}">
+                            <StackPanel>
+                                <TextBlock Text="游戏数值推荐" Style="{StaticResource PageTitle}"/>
+                                <Border Style="{StaticResource NoticeBox}" Margin="0,10,0,12" Background="{DynamicResource BgSubtle}">
+                                    <TextBlock Text="自动识别暂缓开发。请使用“数值修改”页的内置扫描与地址表；本页查询、修改入口已停用。" Style="{StaticResource Hint}"/>
+                                </Border>
+                                <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,14"
+                                           Text="推荐只是候选，确认后才能修改。"/>
+
+                                <Border x:Name="UnityEmptyState" Style="{StaticResource NoticeBox}" Margin="0,0,0,12"
+                                        Background="{DynamicResource BgSubtle}" BorderBrush="{DynamicResource BorderSoft}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Style="{StaticResource NoticeAccentBar}" Background="{DynamicResource AccentText}"/>
+                                        <StackPanel>
+                                            <TextBlock x:Name="UnityEmptyTitle" Text="还没有启动游戏"
+                                                       FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                                            <TextBlock x:Name="UnityEmptyAdvice" Style="{StaticResource Hint}" Margin="0,4,0,0"
+                                                       Text="先到“游戏与翻译”页安装并启动游戏，装好组件才能读到游戏里的数值。"/>
+                                            <Button Content="去启动游戏" Click="OnGoToGamePage" Style="{StaticResource SecondaryButton}"
+                                                    HorizontalAlignment="Left" Margin="0,9,0,0" Padding="12,5"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource Card}">
+                                    <StackPanel>
+                                        <TextBlock Text="查询游戏里的数值" Style="{StaticResource SectionTitle}"/>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,10"
+                                                   Text="想找什么就填什么。留空表示全部列出。例如填“gold”“金钱”“hp”“生命”。"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox x:Name="UnityFieldFilterBox" Width="230" Margin="0,0,8,0"/>
+                                            <Button x:Name="UnityQueryButton" Content="开始查询" Click="OnQueryUnityFields"
+                                                    Style="{StaticResource PrimaryButton}" MinWidth="104"/>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource Muted}" Margin="0,9,0,0" TextWrapping="Wrap"
+                                                   Text="只读取，不修改。查询在游戏主线程分批进行，不会让游戏长时间卡住。"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="推荐结果" Style="{StaticResource SectionTitle}"/>
+                                        <TextBlock Style="{StaticResource Hint}" Margin="0,5,0,10"
+                                                   Text="从上到下按可能性排列。选中一行可以看到为什么推荐它，确认后才会修改。"/>
+
+                                        <DataGrid x:Name="UnityFieldList" Style="{StaticResource CheatGrid}" Height="180"
+                                                  SelectionChanged="OnUnityFieldSelectionChanged">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="推荐程度" Binding="{Binding MatchLabel}" Width="90"/>
+                                                <DataGridTextColumn Header="数值名" Binding="{Binding Field.FieldName}" Width="140"/>
+                                                <DataGridTextColumn Header="所属" Binding="{Binding OwnerSummary}" Width="180"/>
+                                                <DataGridTextColumn Header="当前值" Binding="{Binding Field.DisplayValue}" Width="100"/>
+                                                <DataGridTextColumn Header="类型" Binding="{Binding KindLabel}" Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <TextBlock x:Name="UnityFieldEmptyHint" Style="{StaticResource Hint}" Margin="0,7,0,0"
+                                                   Text="结果会显示在这里。还没有结果时，请先点“开始查询”。"/>
+
+                                        <Border Background="{DynamicResource BgSubtle}" BorderBrush="{DynamicResource BorderSoft}"
+                                                BorderThickness="1" CornerRadius="{StaticResource RadiusControl}"
+                                                Padding="12" Margin="0,11,0,0">
+                                            <StackPanel>
+                                                <TextBlock Text="为什么推荐它" Style="{StaticResource Hint}"
+                                                           Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold"/>
+                                                <TextBlock x:Name="UnityFieldEvidence" Style="{StaticResource Hint}" Margin="0,5,0,0"
+                                                           Text="选中一行后，这里会说明推荐理由。"/>
+                                                <TextBlock Style="{StaticResource Muted}" Margin="0,7,0,0" TextWrapping="Wrap"
+                                                           Text="推荐依据只是字段名和当前值对不对得上，不代表它一定就是你想要的那个数值。改错了可能影响存档，请先备份。"/>
+                                                <Expander Header="技术详情" Style="{StaticResource Disclosure}" Margin="0,7,0,0">
+                                                    <TextBlock x:Name="UnityFieldTechnical" Style="{StaticResource TechnicalText}"
+                                                               Margin="0,5,0,0" Text="（选中一行后显示）"/>
+                                                </Expander>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                            <TextBlock Text="改成" Style="{StaticResource Hint}" VerticalAlignment="Center"
+                                                       Margin="0,0,8,0" TextWrapping="NoWrap"/>
+                                            <TextBox x:Name="UnityFieldValueBox" Width="120" Margin="0,0,10,0"/>
+                                            <Button x:Name="UnityWriteButton" Content="确认修改这个数值" Click="OnWriteUnityField"
+                                                    Style="{StaticResource PrimaryButton}" MinWidth="144"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource Card}" Margin="0,12,0,0" Padding="13">
+                                    <StackPanel>
+                                        <TextBlock x:Name="UnityStatus" Style="{StaticResource Hint}"
+                                                   Foreground="{DynamicResource TextPrimary}" TextWrapping="Wrap"
+                                                   Text="还没有查询。"/>
+                                        <TextBlock x:Name="UnityStatusAdvice" Style="{StaticResource Hint}"
+                                                   Foreground="{DynamicResource Warning}" Margin="0,5,0,0"
+                                                   TextWrapping="Wrap" Visibility="Collapsed"/>
+                                        <TextBlock x:Name="UnityStatusTechnical" Style="{StaticResource TechnicalText}"
+                                                   Margin="0,5,0,0" Visibility="Collapsed"/>
+                                        <TextBlock Style="{StaticResource Muted}" Margin="0,9,0,0" TextWrapping="Wrap"
+                                                   Text="自动识别暂缓开发。IL2CPP 打包的游戏暂时读不到游戏内数值的自动字段信息；“数值修改”页的手动内存扫描不受此限制。"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem x:Name="TranslationServicesTab" Header="翻译服务">
+                        <ScrollViewer x:Name="TranslationServicesScrollViewer"
+                                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                      Padding="32,20,32,20">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Text="翻译服务" FontSize="24" FontWeight="SemiBold" LineHeight="32"
+                                               Foreground="{DynamicResource TextPrimary}"/>
+                                    <TextBlock Grid.Row="1" Text="选择免费翻译或 API 翻译，两种方式的配置分别保留。"
+                                               Style="{StaticResource ServicePageHint}" Margin="0,5,0,0"/>
+                                    <WrapPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                               MaxWidth="340" Margin="20,2,0,0">
+                                        <TextBlock x:Name="TranslationServiceSummaryLabel" Text="当前使用：" Style="{StaticResource ServicePageHint}"/>
+                                        <TextBlock x:Name="TranslationServiceSummary" FontSize="14" FontWeight="SemiBold"
+                                                   Foreground="{Binding Foreground, ElementName=TranslationProviderSummary}"
+                                                   MaxWidth="340" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                    </WrapPanel>
+                                </Grid>
+                                <Border Width="340" Height="46" HorizontalAlignment="Left" Margin="0,16,0,0"
+                                        BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" CornerRadius="8">
+                                    <Grid Margin="-1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <RadioButton x:Name="FreeTranslationButton" Content="免费翻译" GroupName="TranslationMode"
+                                                     Tag="{DynamicResource IconGlobe}" ContentTemplate="{StaticResource ServiceModeContent}"
+                                                     Checked="OnOpenFreeTranslation" Style="{StaticResource ServiceModeOption}"
+                                                     AutomationProperties.Name="免费翻译"/>
+                                        <RadioButton x:Name="ApiSettingsButton" Grid.Column="1" Content="API 翻译" GroupName="TranslationMode"
+                                                     Tag="{DynamicResource IconTune}" ContentTemplate="{StaticResource ServiceModeContent}"
+                                                     Checked="OnSelectApiSettings" Style="{StaticResource ServiceModeOption}"
+                                                     AutomationProperties.Name="API 翻译"/>
+                                    </Grid>
+                                </Border>
+                                <Border Height="1" Background="{DynamicResource BorderSoft}" Margin="0,16,0,14"/>
+                                <TextBlock Text="服务配置" FontSize="19" FontWeight="SemiBold" LineHeight="26"
+                                           Foreground="{DynamicResource TextPrimary}"/>
+                                <TextBlock Text="选择翻译服务并保存后，下次启动游戏时生效。"
+                                           Style="{StaticResource ServicePageHint}" Margin="0,3,0,0"/>
+                                <Grid x:Name="FreeTranslationPanel" Margin="0,14,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="翻译服务" Style="{StaticResource ServicePageHint}" Margin="0,14,0,0"/>
+                                    <Grid x:Name="ProviderFieldHost" Grid.Column="1">
+                                        <StackPanel>
+                                            <ComboBox x:Name="FreeProviderBox" Width="{Binding ActualWidth, ElementName=ProviderFieldHost}"
+                                                      MaxWidth="490" HorizontalAlignment="Left" Style="{StaticResource ServiceProviderPicker}"
+                                                      SelectionChanged="OnFreeProviderSelectionChanged"
+                                                      ToolTip="无需账号、API 密钥或付费。仅使用所选服务，不会自动切换其他服务。"
+                                                      AutomationProperties.Name="免费翻译服务">
+                                                <ComboBoxItem Tag="Bing">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{StaticResource BingServiceMark}" Width="28" Height="36" Margin="10,0,16,0"/>
+                                                        <TextBlock Text="必应 Bing" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                            <TextBlock Text="无需账号和密钥" Style="{StaticResource ServicePageHint}" Margin="5,8,0,0"/>
+                                            <TextBlock x:Name="FreeProviderStatus" Style="{StaticResource ServicePageHint}"
+                                                       Visibility="Collapsed" Margin="5,8,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                                <Border x:Name="FreeTranslationDelayNotice" Margin="0,18,0,0" Padding="18,12"
+                                        Background="{DynamicResource AccentSoft}" CornerRadius="8"
+                                        Visibility="{Binding Visibility, ElementName=FreeTranslationPanel}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{DynamicResource IconClock}" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        <TextBlock Grid.Column="1" Style="{StaticResource ServicePageHint}" Foreground="{DynamicResource AccentText}"
+                                                   Text="受必应供应商影响，首次翻译预计需要等待30秒才会生效。&#x0a;后续优先使用本机缓存。"/>
+                                    </Grid>
+                                </Border>
+                                <Grid x:Name="ApiTranslationPanel" Margin="0,14,0,0" Visibility="Collapsed">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="翻译服务地址" Style="{StaticResource ServicePageHint}" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="EndpointBox" Grid.Column="1" Text="https://api.deepseek.com/chat/completions"
+                                             TextChanged="OnApiDraftChanged" Style="{StaticResource ServicePageInput}" AutomationProperties.Name="翻译服务地址"/>
+                                    <TextBlock Grid.Row="1" Text="模型名称" Style="{StaticResource ServicePageHint}" Margin="0,10,0,0" VerticalAlignment="Center"/>
+                                    <TextBox x:Name="ModelBox" Grid.Row="1" Grid.Column="1" Text="deepseek-flash" Margin="0,10,0,0"
+                                             TextChanged="OnApiDraftChanged" Style="{StaticResource ServicePageInput}" AutomationProperties.Name="模型名称"/>
+                                    <TextBlock Grid.Row="2" Text="翻译服务密钥" Style="{StaticResource ServicePageHint}" Margin="0,10,0,0" VerticalAlignment="Center"/>
+                                    <PasswordBox x:Name="ApiKeyBox" Grid.Row="2" Grid.Column="1" Margin="0,10,0,0"
+                                                 PasswordChanged="OnApiDraftChanged" Style="{StaticResource ServicePagePassword}" AutomationProperties.Name="翻译服务密钥"/>
+                                    <StackPanel Grid.Row="3" Grid.Column="1" Margin="0,6,0,0">
+                                        <TextBlock Text="你需要自己的翻译服务密钥。密钥仅保存在本机，并由当前 Windows 账户加密。"
+                                                   Style="{StaticResource ServicePageHint}"/>
+                                        <TextBlock x:Name="ApiProviderSummary" Style="{StaticResource ServicePageHint}" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Border Height="1" Background="{DynamicResource BorderSoft}" Margin="0,14,0,14"/>
+                                <Grid>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Visibility, ElementName=FreeTranslationPanel}" Value="Visible">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="118"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{DynamicResource IconClock}" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <TextBlock Grid.Column="1" Text="使用说明" Style="{StaticResource ServicePageHint}"/>
+                                    <TextBlock Grid.Column="2" Text="首次翻译可能较慢；首次加载文本较多时可能需要等待，后续优先使用本机缓存。"
+                                               Style="{StaticResource ServicePageHint}"/>
+                                </Grid>
+                                <Grid Margin="0,14,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="118"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{DynamicResource IconShield}" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <TextBlock Grid.Column="1" Text="隐私与说明" Style="{StaticResource ServicePageHint}"/>
+                                    <TextBlock x:Name="TranslationPrivacyNotice" Grid.Column="2" Style="{StaticResource ServicePageHint}"/>
+                                </Grid>
+                                <Border Height="1" Background="{DynamicResource BorderSoft}" Margin="0,16,0,14"/>
+                                <WrapPanel>
+                                    <Button x:Name="SaveTranslationSettingsButton" Click="OnSaveTranslationSettings"
+                                            Style="{StaticResource ServiceSaveButton}" AutomationProperties.Name="保存并启用">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{DynamicResource IconCheck}" Width="24" Height="24" Margin="0,0,14,0"/>
+                                            <TextBlock Text="保存并启用" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Border BorderBrush="{DynamicResource BorderSoft}" BorderThickness="1,0,0,0"
+                                            Margin="24,10,0,10" Padding="24,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{DynamicResource IconInfo}" Width="22" Height="22" Margin="0,0,12,0"/>
+                                            <TextBlock Text="下次启动游戏时生效。" Style="{StaticResource ServicePageHint}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </WrapPanel>
+                                <TextBlock x:Name="TranslationSaveStatus" Style="{StaticResource ServicePageHint}"
+                                           Visibility="Collapsed" Margin="0,12,0,0"/>
+                                <Border BorderBrush="{DynamicResource BorderSoft}" BorderThickness="0,1,0,0" Padding="0,12,0,0" Margin="0,14,0,0">
+                                    <DockPanel>
+                                        <Image Source="{DynamicResource IconInfo}" Width="18" Height="18" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding Text, ElementName=TranslationSpeedNotice}" Style="{StaticResource Hint}" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+
+        <!-- 保留旧状态同步目标，界面只展示当前游戏详情中的单一状态区域。 -->
+        <StackPanel Visibility="Collapsed" IsHitTestVisible="False">
+            <TextBlock x:Name="VersionLabel"/>
+            <TextBlock x:Name="SidebarGameName"/>
+            <Border x:Name="SidebarGameDot"/>
+            <TextBlock x:Name="SidebarGameStateText"/>
+            <Border x:Name="ConnectionDot"/>
+            <TextBlock x:Name="ConnectionText"/>
+            <TextBlock x:Name="ConnectionDetail"/>
+            <TextBlock x:Name="TopPageTitle"/>
+            <TextBlock x:Name="TopGameText"/>
+            <TextBlock x:Name="TopNextStep"/>
+        </StackPanel>
+
+        <!-- 确认层覆盖整个窗口工作区，保留键盘和按钮交互。 -->
+        <Grid x:Name="ConfirmOverlay" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="100"
+              Background="{DynamicResource OverlayScrim}" Visibility="Collapsed">
+            <Border Style="{StaticResource Card}" Width="420" Padding="20"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock x:Name="ConfirmTitle" Text="确认操作" Style="{StaticResource SectionTitle}"/>
+                    <TextBlock x:Name="ConfirmMessage" Style="{StaticResource Hint}" Margin="0,9,0,0" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="ConfirmDetail" Style="{StaticResource TechnicalText}" Margin="0,9,0,0"
+                               Visibility="Collapsed"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                        <Button x:Name="ConfirmCancelButton" Content="取消" Click="OnConfirmCancel"
+                                Style="{StaticResource SecondaryButton}" Margin="0,0,8,0" MinWidth="86"/>
+                        <Button x:Name="ConfirmOkButton" Content="确认" Click="OnConfirmAccept"
+                                Style="{DynamicResource DangerButton}" MinWidth="86"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
+

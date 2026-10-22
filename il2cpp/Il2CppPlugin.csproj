@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- 游戏内 BepInEx IL2CPP 运行时是 .NET 6.0.7 -->
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <!-- 必须启用：与 Core 的共享源码一致，否则 nullable 注解会警告 -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>UnityTranslator.Plugin.Il2Cpp</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="TranslatorPlugin.cs" />
+    <Compile Include="PipeClient.cs" />
+    <!-- 与 App 侧 Core 共享的纯逻辑：三个框架都要能编译 -->
+    <Compile Include="$(CoreDir)/FontReplacementPolicy.cs"><Link>FontReplacementPolicy.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/FontAssetPipeline.cs"><Link>FontAssetPipeline.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/UnityMemberReader.cs"><Link>UnityMemberReader.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/TranslationFontSizePolicy.cs"><Link>TranslationFontSizePolicy.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/ReflectionTextLayout.cs"><Link>ReflectionTextLayout.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/TextSelectionPolicy.cs"><Link>TextSelectionPolicy.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/TranslationDebounce.cs"><Link>TranslationDebounce.cs</Link></Compile>
+    <Compile Include="$(CoreDir)/UnityReflection.cs"><Link>UnityReflection.cs</Link></Compile>
+    <!-- Mono 插件的响应匹配规则，零外部依赖，原样复用 -->
+    <Compile Include="$(CoreDir)/../UnityTranslator.Plugin/ReplacementPolicy.cs"><Link>ReplacementPolicy.cs</Link></Compile>
+  </ItemGroup>
+
+  <!-- BepInEx 的 IL2CPP 支持库（编译期引用，运行时不复制） -->
+  <ItemGroup>
+    <Reference Include="BepInEx.Core"><HintPath>$(LoaderCore)/BepInEx.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx.Unity.IL2CPP"><HintPath>$(LoaderCore)/BepInEx.Unity.IL2CPP.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Il2CppInterop.Runtime"><HintPath>$(LoaderCore)/Il2CppInterop.Runtime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(LoaderCore)/0Harmony.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <!-- 游戏生成的互操作程序集：只为拿到 UnityEngine 的基础类型（MonoBehaviour/Time 等）。
+       注意不引用 Unity.TextMeshPro —— 文字组件一律走反射访问。 -->
+  <ItemGroup>
+    <Reference Include="Il2Cppmscorlib"><HintPath>$(InteropDir)/Il2Cppmscorlib.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(InteropDir)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(InteropDir)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

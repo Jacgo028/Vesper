@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7D5A548E-E939-4428-9503-0F3A841FBDA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTranslator.Core", "src\UnityTranslator.Core\UnityTranslator.Core.csproj", "{E808B003-81D2-4D1A-8E58-F5A887A0ED55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3E85E3D8-572C-4EB0-8444-E9E20C48C4F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTranslator.Core.Tests", "tests\UnityTranslator.Core.Tests\UnityTranslator.Core.Tests.csproj", "{2D4DDF0B-BB4D-47D8-A430-6B9BAFDFECD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTranslator.App", "src\UnityTranslator.App\UnityTranslator.App.csproj", "{3EDE63A5-9202-4893-BF96-A6040D909726}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTranslator.App.Tests", "tests\UnityTranslator.App.Tests\UnityTranslator.App.Tests.csproj", "{4B755596-48CA-44AC-AD9A-F34325BF78B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E808B003-81D2-4D1A-8E58-F5A887A0ED55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E808B003-81D2-4D1A-8E58-F5A887A0ED55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E808B003-81D2-4D1A-8E58-F5A887A0ED55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E808B003-81D2-4D1A-8E58-F5A887A0ED55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4DDF0B-BB4D-47D8-A430-6B9BAFDFECD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4DDF0B-BB4D-47D8-A430-6B9BAFDFECD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4DDF0B-BB4D-47D8-A430-6B9BAFDFECD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4DDF0B-BB4D-47D8-A430-6B9BAFDFECD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EDE63A5-9202-4893-BF96-A6040D909726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EDE63A5-9202-4893-BF96-A6040D909726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EDE63A5-9202-4893-BF96-A6040D909726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EDE63A5-9202-4893-BF96-A6040D909726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B755596-48CA-44AC-AD9A-F34325BF78B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B755596-48CA-44AC-AD9A-F34325BF78B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B755596-48CA-44AC-AD9A-F34325BF78B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B755596-48CA-44AC-AD9A-F34325BF78B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E808B003-81D2-4D1A-8E58-F5A887A0ED55} = {7D5A548E-E939-4428-9503-0F3A841FBDA4}
+		{2D4DDF0B-BB4D-47D8-A430-6B9BAFDFECD9} = {3E85E3D8-572C-4EB0-8444-E9E20C48C4F3}
+		{3EDE63A5-9202-4893-BF96-A6040D909726} = {7D5A548E-E939-4428-9503-0F3A841FBDA4}
+		{4B755596-48CA-44AC-AD9A-F34325BF78B3} = {3E85E3D8-572C-4EB0-8444-E9E20C48C4F3}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,161 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- ★★ 目标框架必须可覆盖，且**按游戏选择**：
+         Unity 2021+ 的 Managed 里带 netstandard.dll（2.1），可以用 netstandard2.1；
+         **Unity 2020 及更早的 Managed 里根本没有 netstandard.dll** —— 实测：
+           Unity 2020.1（The Blood of Yidhra）: netstandard.dll 缺失
+           Unity 2021.3（Mad Island）:         netstandard.dll 90112 字节
+         用 netstandard2.1 编出来的插件在 Unity 2020 上会"程序集解析失败 → 类型加载失败"，
+         表现是 Unity 只打一句 "could not be instantiated!"，**没有任何托管日志**。
+         所以 Unity 2020 变体改用 netstandard2.0。 -->
+<TargetFramework Condition="'$(PluginTargetFramework)' == ''">netstandard2.1</TargetFramework>
+<TargetFramework Condition="'$(PluginTargetFramework)' != ''">$(PluginTargetFramework)</TargetFramework>
+    <FrameworkPathOverride Condition="'$(PluginTargetFramework)' == 'net46'">$(GameManagedDir)</FrameworkPathOverride>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <BepInExMajor Condition="'$(BepInExMajor)' == ''">6</BepInExMajor>
+    <DefineConstants Condition="'$(BepInExMajor)' == '5'">$(DefineConstants);BEPINEX5</DefineConstants>
+
+    <!-- ★★ 精简变体（`-p:SlimVariant=true`）：面向 Unity 5.6.7 / CLR 2.0 的老游戏
+         （实测 NightofRevenge：`CLR runtime version: 2.0.50727.1433`，
+           Managed 里既没有 netstandard.dll，也没有 TextRenderingModule/TextCore/TMP/Newtonsoft）。
+
+         做法：
+           1. 目标框架降到 **net35**，并用 `FrameworkPathOverride` 直接指向游戏自己的 Managed ——
+              这样编译器会**用目标游戏真实的 BCL 和 UnityEngine** 来检查，
+              缺失的 API 在编译期就报出来，而不是留到运行时抛 MissingMethodException
+              （`TrimEnd(char)` 就是这么栽的，见进展记录 B77）；
+           2. 整份排除 `RuntimeCjkFontAsset.cs` / `FallbackTextOverlay.cs`（它们全是 TMP 字体装配，
+              对这种没有 TMP 的游戏毫无意义，占了 122 个错误里的 110 个）；
+           3. 定义 `SLIM_NO_TMP`，让 `Plugin.cs` 等文件把 TMP 段用 `#if` 排除；
+           4. 只引用游戏里**真实存在**的程序集。 -->
+    <SlimVariant Condition="'$(SlimVariant)' == ''">false</SlimVariant>
+    <TargetFramework Condition="'$(SlimVariant)' == 'true'">net35</TargetFramework>
+    <FrameworkPathOverride Condition="'$(SlimVariant)' == 'true'">$(GameManagedDir)</FrameworkPathOverride>
+    <DefineConstants Condition="'$(SlimVariant)' == 'true'">$(DefineConstants);SLIM_NO_TMP;NET35</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(SlimVariant)' == 'true'">
+    <Compile Remove="RuntimeCjkFontAsset.cs" />
+    <Compile Remove="FallbackTextOverlay.cs" />
+    <!-- 这两个文件整份是 TMP；Unity 5.6.7 没有 TMP，留着毫无意义（占 30 + 6 个错误） -->
+    <Compile Remove="FontFallbackLoader.cs" />
+    <!-- OCR 是辅助功能，依赖 TMP 与 .NET 4.0 的并发类型；精简变体不做它 -->
+    <Compile Remove="OcrCapture.cs" />
+    <!-- 作弊功能的插件侧实现：依赖被排除的作弊 Core 类型（NumericKind/FieldSnapshot/…）。
+         排除一个簇会牵出依赖它的文件 —— 这是第二次踩到同一类问题（见进展记录 B80）。
+         ★ 路径必须带子目录：MSBuild 的 Remove 匹配的是**被 glob 收进来时的相对路径**，
+           这两个文件在 Cheats/ 下，写成 "UnityFieldProbe.cs" 匹配不到、等于没删。 -->
+    <Compile Remove="Cheats/UnityFieldProbe.cs" />
+    <Compile Remove="Cheats/CheatCommands.cs" />
+    <!-- 用游戏自己的 Managed 直接编译，让编译器按目标运行时的真实 BCL 检查。
+         注意：Slim/ 下的文件由 SDK 默认 glob 收进来，**不要**再显式 Include，否则 CS2002。 -->
+    <!-- PipeClient 依赖 Task/CancellationTokenSource/命名管道，精简变体整份换成 SlimPipeClient -->
+    <Compile Remove="PipeClient.cs" />
+    <!-- ★ Plugin.cs 也是：TMP 类型贯穿它的核心文本管线（54 个错误分布在 26 个位置），
+         不是"包几个方法"能解决的。精简变体换成自包含的 Slim/SlimPlugin.cs。 -->
+    <Compile Remove="Plugin.cs" />
+
+    <!-- ★★ Core 文件的排除放在**文件末尾**的 ItemGroup 里。
+         原因：MSBuild 逐项求值，而 Core 的 <Compile Include> 在本文件靠后的位置，
+         把 Remove 写在这里会被后面的 Include 覆盖掉（第一版就踩了这个坑：错误数纹丝不动）。 -->
+  </ItemGroup>
+
+  <!-- 精简变体只引用游戏里确实存在的程序集 -->
+  <ItemGroup Condition="'$(SlimVariant)' == 'true'">
+    <Reference Include="UnityEngine"><HintPath>$(GameManagedDir)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(GameManagedDir)/UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.Networking" Condition="Exists('$(GameManagedDir)/UnityEngine.Networking.dll')">
+      <HintPath>$(GameManagedDir)/UnityEngine.Networking.dll</HintPath><Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 与 Core 共用同一份源码文件，而不是引用 Core 项目：Core 依赖 Microsoft.Data.Sqlite，
+         引用它会把额外的运行时依赖带进游戏进程。
+         作弊协议同样只链接源码，且刻意不依赖任何 JSON 库：
+         System.Text.Json 在 netstandard2.1 需要额外 NuGet 依赖，Newtonsoft 的版本由游戏决定，
+         两者都可能让插件在游戏里加载失败。 -->
+    <Compile Include="../UnityTranslator.Core/FontReplacementPolicy.cs" Link="FontReplacementPolicy.cs" />
+    <Compile Include="../UnityTranslator.Core/TextSelectionPolicy.cs" Link="TextSelectionPolicy.cs" />
+    <Compile Include="../UnityTranslator.Core/TranslationDebounce.cs" Link="TranslationDebounce.cs" />
+    <Compile Include="../UnityTranslator.Core/OverlayTextLayout.cs" Link="OverlayTextLayout.cs" />
+    <Compile Include="../UnityTranslator.Core/CjkCharacterSet.cs" Link="CjkCharacterSet.cs" />
+    <Compile Include="../UnityTranslator.Core/LoadFaceOverloadSelector.cs" Link="LoadFaceOverloadSelector.cs" />
+    <Compile Include="../UnityTranslator.Core/FontAssetPipeline.cs" Link="FontAssetPipeline.cs" />
+    <Compile Include="../UnityTranslator.Core/TranslationFontSizePolicy.cs" Link="TranslationFontSizePolicy.cs" />
+    <Compile Include="../UnityTranslator.Core/ReflectionTextLayout.cs" Link="ReflectionTextLayout.cs" />
+    <Compile Include="../UnityTranslator.Core/UnityMemberReader.cs" Link="UnityMemberReader.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/CheatTypes.cs" Link="Cheats/CheatTypes.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/CheatWire.cs" Link="Cheats/CheatWire.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/ICheatProtocol.cs" Link="Cheats/ICheatProtocol.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/MiniJson.cs" Link="Cheats/MiniJson.cs" />
+    <Compile Include="../UnityTranslator.Core/OcrOverlayWire.cs" Link="OcrOverlayWire.cs" Condition="'$(SlimVariant)' != 'true'" />
+    <Compile Include="../UnityTranslator.Core/Cheats/NumericValue.cs" Link="Cheats/NumericValue.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/CandidateRanker.cs" Link="Cheats/CandidateRanker.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/FieldWriteGuard.cs" Link="Cheats/FieldWriteGuard.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/CheatProtocol.cs" Link="Cheats/CheatProtocol.cs" />
+    <Compile Include="../UnityTranslator.Core/Cheats/NetStandardPolyfills.cs" Link="Cheats/NetStandardPolyfills.cs" />
+  </ItemGroup>
+  <!-- BepInEx 引用两种模式都要（精简变体走 BepInEx 5） -->
+  <ItemGroup>
+    <Reference Include="BepInEx.Core" Condition="'$(BepInExMajor)' == '6'"><HintPath>$(BepInExDir)/BepInEx/core/BepInEx.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx.Unity.Mono" Condition="'$(BepInExMajor)' == '6'"><HintPath>$(BepInExDir)/BepInEx/core/BepInEx.Unity.Mono.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx" Condition="'$(BepInExMajor)' == '5'"><HintPath>$(BepInExDir)/BepInEx/core/BepInEx.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(SlimVariant)' != 'true'">
+    <Reference Include="UnityEngine"><HintPath>$(GameManagedDir)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameManagedDir)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(GameManagedDir)/UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule"><HintPath>$(GameManagedDir)/UnityEngine.JSONSerializeModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(GameManagedDir)/UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <!-- ★★ TextCore 的程序集名**随 Unity 版本变化，且两者互斥存在**（实测）：
+           Unity 2020：FontEngine/FaceInfo/GlyphRect 都在 UnityEngine.TextCoreModule.dll，
+                       而 UnityEngine.TextCoreFontEngineModule.dll **不存在**；
+           Unity 2021+：反过来 —— FontEngineModule 有，TextCoreModule **不存在**。
+         硬引用其中一个，另一个版本上就会"程序集解析失败 → 类型加载失败"，
+         表现是 Unity 只打一句 "could not be instantiated!"，且**不产生任何托管日志**。
+         所以这里按目标游戏的 Managed 目录**条件引用**，一个变体对应一个 Unity 大版本。 -->
+    <Reference Include="UnityEngine.TextCoreFontEngineModule" Condition="Exists('$(GameManagedDir)/UnityEngine.TextCoreFontEngineModule.dll')">
+      <HintPath>$(GameManagedDir)/UnityEngine.TextCoreFontEngineModule.dll</HintPath><Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule" Condition="Exists('$(GameManagedDir)/UnityEngine.TextCoreModule.dll')">
+      <HintPath>$(GameManagedDir)/UnityEngine.TextCoreModule.dll</HintPath><Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule"><HintPath>$(GameManagedDir)/UnityEngine.ScreenCaptureModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(GameManagedDir)/UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(GameManagedDir)/UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UIModule"><HintPath>$(GameManagedDir)/UnityEngine.UIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(GameManagedDir)/UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Unity.TextMeshPro"><HintPath>$(GameManagedDir)/Unity.TextMeshPro.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <!-- ★★ 精简变体排除的 Core 文件。
+       位置很关键：**必须**在 Core 的 <Compile Include>（上面那个 ItemGroup）之后，
+       否则 MSBuild 先 Remove 后 Include，等于没删 —— 第一版就是这个坑，错误数纹丝不动。 -->
+  <ItemGroup Condition="'$(SlimVariant)' == 'true'">
+    <!-- 字体装配簇：整套都是为 TextMeshPro 服务的
+         （CjkCharacterSet 规划装哪些字形、FontAssetPipeline 装配图集、
+           LoadFaceOverloadSelector 选 LoadFontFace 重载、FontReplacementPolicy 决定替换还是覆盖）。
+         目标游戏根本没有 TMP，整簇对精简变体毫无意义，一并排除。
+         精简变体的字体回退改走 UnityEngine.Font。 -->
+    <Compile Remove="../UnityTranslator.Core/CjkCharacterSet.cs" />
+    <Compile Remove="../UnityTranslator.Core/FontAssetPipeline.cs" />
+    <Compile Remove="../UnityTranslator.Core/FontReplacementPolicy.cs" />
+    <Compile Remove="../UnityTranslator.Core/ReflectionTextLayout.cs" />
+    <Compile Remove="../UnityTranslator.Core/LoadFaceOverloadSelector.cs" />
+
+    <!-- 作弊功能簇：依赖 .NET 4.0 并发类型与 ReadOnlySpan（CLR 2.0 没有），
+         而且不属于翻译主链路，精简变体不做。 -->
+    <Compile Remove="../UnityTranslator.Core/Cheats/CheatTypes.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/CheatWire.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/ICheatProtocol.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/MiniJson.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/NumericValue.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/CandidateRanker.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/FieldWriteGuard.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/CheatProtocol.cs" />
+    <Compile Remove="../UnityTranslator.Core/Cheats/NetStandardPolyfills.cs" />
+  </ItemGroup>
+</Project>

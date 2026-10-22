@@ -1,0 +1,14 @@
+IconGame: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Games/SVG/ic_fluent_games_24_regular.svg
+IconChart: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Data%20Bar%20Vertical/SVG/ic_fluent_data_bar_vertical_24_regular.svg
+IconSettings: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Settings/SVG/ic_fluent_settings_24_regular.svg
+IconGlobe: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Globe/SVG/ic_fluent_globe_24_regular.svg
+IconClock: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Clock/SVG/ic_fluent_clock_24_regular.svg
+IconShield: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Shield/SVG/ic_fluent_shield_24_regular.svg
+IconCheck: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Checkmark/SVG/ic_fluent_checkmark_24_regular.svg
+IconInfo: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Info/SVG/ic_fluent_info_24_regular.svg
+
+SVG path data is retained verbatim; WPF drawing uses the application TextPrimary brush for day/night mode.
+
+IconTune: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Options/SVG/ic_fluent_options_24_regular.svg
+IconTranslate: https://raw.githubusercontent.com/microsoft/fluentui-system-icons/a347af95478f989038cccbf085978865264c048a/assets/Translate/SVG/ic_fluent_translate_24_regular.svg
+

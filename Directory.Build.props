@@ -1,0 +1,5 @@
+<Project>
+  <!-- 只作用于 src 与 tests 下的项目。il2cpp/ 下的实验项目有各自的 Directory.Build.props，
+       由它们显式引入 Version.props，避免实验代码影响正式交付物。 -->
+  <Import Project="$(MSBuildThisFileDirectory)Version.props" />
+</Project>

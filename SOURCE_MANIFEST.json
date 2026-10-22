@@ -1,0 +1,1562 @@
+[
+  {
+    "Path": "Directory.Build.props",
+    "Sha256": "EF847C81C5DF02CCAD37367BBD7DCE8B35ADB5C4ED7CE52A4EF0B99733B59667",
+    "Length": 289,
+    "Unmodified": true
+  },
+  {
+    "Path": "UnityTranslator.sln",
+    "Sha256": "BA57796CA5E308B368FA362D4DE1A8F624BDC16128B99F1B5712F8AD73619296",
+    "Length": 3269,
+    "Unmodified": true
+  },
+  {
+    "Path": "Version.props",
+    "Sha256": "0D31FB76978D9924A011B0307239227CA4F7C6267C975EF631F0999474332BF8",
+    "Length": 1227,
+    "Unmodified": true
+  },
+  {
+    "Path": "il2cpp/Directory.Build.props",
+    "Sha256": "90154223715B9E3C2C08A213A461DC62683A5B65DEFFC0BBEF48460458059D80",
+    "Length": 147,
+    "Unmodified": true
+  },
+  {
+    "Path": "il2cpp/Il2CppPlugin.csproj",
+    "Sha256": "8A106B63F382F0A2CD8B91FE7E003D574B99225D05AAB359459565AAE3111DAE",
+    "Length": 3164,
+    "Unmodified": true
+  },
+  {
+    "Path": "il2cpp/PipeClient.cs",
+    "Sha256": "02D2BF89C5509C1CFA4731B8F83F62206B7CE3802DCDB18DFC597EA7EDEED7D2",
+    "Length": 5178,
+    "Unmodified": true
+  },
+  {
+    "Path": "il2cpp/TranslatorPlugin.cs",
+    "Sha256": "766FE6D62C8D74FDF86406A889F86B694277DB19CD79CDAE655CA5BA860C7458",
+    "Length": 119652,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/build-il2cpp-package.ps1",
+    "Sha256": "30DCD69DA8E84D8714BD91B203AAF5CACA7040C92AFD0A6931542A2356B0452D",
+    "Length": 5360,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/build.ps1",
+    "Sha256": "962B9AE773BBD62841FAEFAD99DA2C6B837D21605B9AF949A9C7754B99BA0AAB",
+    "Length": 12358,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/BundleInventory.cs",
+    "Sha256": "C041E86349F9DBBB7EFF9999C8F1FCA67019FDC85E7E82E905578FFF2D564951",
+    "Length": 8802,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/external-ocr-publish.lock.json",
+    "Sha256": "7370572E208BFA6DE2BE6719C155458C0AE804F2B7A86728F3DF1DB0604D8276",
+    "Length": 4704,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/publish-input-freeze.targets",
+    "Sha256": "1CA58AEED0685CA06A14CE3762DE3EA837EE4A7C562B70E08E8F2CE92BC16D2B",
+    "Length": 1557,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/Test-ExternalReleaseDecision.ps1",
+    "Sha256": "531D84F25EAF70A7D44BEC70F4453A6CA7094ECF4EEAF1421F454F3E6B83BAD1",
+    "Length": 954,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/verify-external-ocr.ps1",
+    "Sha256": "9E5C0BAC19B18F3CA322A4431B54BFAB58A885CACDF7CB54F444852C9FCDF40C",
+    "Length": 10995,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/licenses/external-ocr/PROVENANCE.md",
+    "Sha256": "DD9784A3830A2EA685D4BF603A3DEED9084103EB7461708DF5AC09E2C67F54C6",
+    "Length": 3159,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/licenses/external-ocr/SharpGenTools-LICENSE.txt",
+    "Sha256": "1CC7ABD1E97575838535484BEF6E4AB14E81681DDF7837672ACEDE5FCA1D4E30",
+    "Length": 1101,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/licenses/external-ocr/Vortice.Mathematics-LICENSE.txt",
+    "Sha256": "CF72351FA2E9F2EB181AF7FD508DD73DA1D84BA43575CB98F7AF22F26A81AF5E",
+    "Length": 1090,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/licenses/external-ocr/Vortice.Windows-LICENSE.txt",
+    "Sha256": "82BD4E84D144BEBBB519ED05899F0CEAEAF2E0F95160AC32FD8CC388710C76D0",
+    "Length": 1090,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/licenses/external-ocr/Windows-SDK-LICENSE.rtf",
+    "Sha256": "DD07EB178E00C6BBA4148457FC00FF77CD4887EB521D504186FE59C9EC8BBE62",
+    "Length": 246945,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/licenses/external-ocr/Windows-SDK-REDIST.md",
+    "Sha256": "FF4DC82936EF9E8449927A3D06EE1FCA801933C1464CEEE60FA14003EB656DD0",
+    "Length": 19214,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/tests/Test-Il2CppPackage.ps1",
+    "Sha256": "862708454B374DCED46CF90F30289D6E4A96A099D297F6AE54DDB660BA630E2D",
+    "Length": 7530,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/tests/fixtures/FakeDotNet.cmd",
+    "Sha256": "BE89D13CC97FAF6BFEF2248649E88F1181052FCE2D21BB8054BDC95316D518E8",
+    "Length": 159,
+    "Unmodified": true
+  },
+  {
+    "Path": "packaging/tests/fixtures/FakeDotNet.ps1",
+    "Sha256": "ACA6F570CFB23035EDB2A45C3C26941026E0650392BACE10E587FF1D9CA5AC5B",
+    "Length": 1953,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/App.xaml",
+    "Sha256": "B403EBA110CA68D7C085C96EE96E57FDF0B8D84C4A5741894CB53893CE513C76",
+    "Length": 369,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/App.xaml.cs",
+    "Sha256": "CD0DE0156495F30439A210DCD5FC2505CCA4BB5691953C11EA130FE72D5A5BB7",
+    "Length": 226,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/AppVersion.cs",
+    "Sha256": "3D86044CC6CE4E06B5C0D13C33B74090A718E645E4E42B3008BE0CC8CD82569B",
+    "Length": 1111,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/AssemblyInfo.cs",
+    "Sha256": "3FAC2AF92385F676E9A941BEFD23FE38F0A5FA6167D4A3A88F07E730C5595CA3",
+    "Length": 643,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/BingFreeTranslationClient.cs",
+    "Sha256": "EFF4E524116B4EB5C32B74F28D1C2DA3F686D7E5BCD9A45F3952B4D3A2A1EAF8",
+    "Length": 7173,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ChatTranslationClient.cs",
+    "Sha256": "83D43DE5F7DA3256A09966D58C3752F8F595A0555FED98D0F7E148C3CBD3EA51",
+    "Length": 7426,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ComponentNotice.cs",
+    "Sha256": "9E5654E83AB81702BD30DBC90DC9B71E9EB8D1533F178C82FC8C73B72E12D8AE",
+    "Length": 2429,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/FileDropTranslationHost.cs",
+    "Sha256": "1B76BC0B2D4C2B8A77904168510C6550AE9D5A96F78237DAC25E58400E157E6A",
+    "Length": 6160,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/GameIconConverter.cs",
+    "Sha256": "457D040C6278A430075F785084F060D5E5ADFCCDD11EB4CCDF2CD84210F18DDE",
+    "Length": 2212,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/GameLibrary.cs",
+    "Sha256": "66A9CA40DB18A1B6789462551FD8AB33BBAD1EB3E55EE125AC48DAAAB92C011A",
+    "Length": 7527,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/InternalsVisibleTo.cs",
+    "Sha256": "B38DFA9B4388606931C4E8A7FB1EE51C265DD639F73EE790888876CBCB642551",
+    "Length": 1283,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/LibreTranslateClient.cs",
+    "Sha256": "55A43EC4F88230579B63C3D8E37FDECA65B079C38BBB1900DAC24E6E44250384",
+    "Length": 1213,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.AddressTable.cs",
+    "Sha256": "51973BC6745596554C099801E4348C1CF84A894C371F59908EEB499130702298",
+    "Length": 9959,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.Appearance.cs",
+    "Sha256": "9EC87C482CE7B029E51A8FA4402B0C0A988D497D8FB33BB8DADF3FA5A97E751C",
+    "Length": 6363,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.Cheats.cs",
+    "Sha256": "C8DB1C6F59996E9C9412E566FDC0906B03A366B9F4ACBE9F677F8CF2E2DC84B1",
+    "Length": 105518,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.ExternalOcr.cs",
+    "Sha256": "FF2429C7E325CF3F3C615E1626806FCCC0CBB7C5617752B091B734DDC22AAFFD",
+    "Length": 4803,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.Library.cs",
+    "Sha256": "CDFA005E8937795B6EAFAF7F843BC54BAAAF54F2C3176D9A9D21694E27984E61",
+    "Length": 14582,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.Navigation.cs",
+    "Sha256": "95F38C6B17F2673EF5A3CC4DB44F315A511D42B19F39EFC338FC68DD00AF84E8",
+    "Length": 998,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.Ocr.cs",
+    "Sha256": "A808EB54DC72266AFF1478A830A4C29423A7C9BB7135060B787F3A7BE2DAE6A7",
+    "Length": 4336,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.Providers.cs",
+    "Sha256": "44586D9C70CD3855C7726CFD07E7CD1352140BF70A12E396742C0384B0CC2446",
+    "Length": 8816,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.xaml",
+    "Sha256": "B1E2FA2CF58807A491D9881C313CFBD746F188662BA4F1732EC4B79D8A1DAAAC",
+    "Length": 112674,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/MainWindow.xaml.cs",
+    "Sha256": "E3377DD2484C6E468E50566472A9C40377422968C5CF1683B5DA291A984A1A0E",
+    "Length": 39853,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/NamedPipeHost.cs",
+    "Sha256": "DEBE3F34681ED1FE06292ACA87DDE25DF820B169BF51D87C4A2753A10D7DEBF0",
+    "Length": 13207,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/OcrTranslationService.cs",
+    "Sha256": "B99CC33C5994BC2D0DE0AAA2AEFA129F8D31E01F49607B0EB2E8A557E16B0BD0",
+    "Length": 1630,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/OcrWorkerHost.cs",
+    "Sha256": "5CC86C11CE096A40F084265C77DDDA86EA1000C4516F03F639F8A02D1722FE4B",
+    "Length": 4677,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/PackageCatalog.cs",
+    "Sha256": "C6C8A32A94F98F81CF38CE3F3C1AF760639B114EB233D324DE29FCD669CEDFA3",
+    "Length": 7291,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/packages.lock.json",
+    "Sha256": "0E31E6409D0368FF88DA72AE2E5CFF9668659D95C5F3B3AE23CE5B025855B51C",
+    "Length": 4170,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/RankedCandidateView.cs",
+    "Sha256": "59C29FA9046CB43AD9465AE20A7CF5066164A86B9534C6C27A802B5DA3662C6E",
+    "Length": 3689,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/TcpTranslationHost.cs",
+    "Sha256": "BAC12F69E964CD46ADB47463EC446EF9F1855F678A9D812EA191EB762B56C7FC",
+    "Length": 5332,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Theme.xaml",
+    "Sha256": "A9B7DC6F44EDA2B3FBDE349C6BE9E6A761691B2E2978F390367AC44773CECAEA",
+    "Length": 57789,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/TranslationCoordinator.cs",
+    "Sha256": "1180B8DC3EF2BF69E1F43C2F86E10E3737AB00D4B972F1E8278F1AEF3B1C8274",
+    "Length": 11703,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/TranslationProviderFactory.cs",
+    "Sha256": "3BE9F56CB018009C8893161BFBA5EB0633E503C450505DD25BB6824463C83C83",
+    "Length": 2021,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/UiText.cs",
+    "Sha256": "7DA38A85316B13CD444213616F8279BB68736B91A87AFE03C7D3448194A22777",
+    "Length": 5044,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/UnityTranslator.App.csproj",
+    "Sha256": "F889B5BF045F17685D24AAE8BEDA10F718B300AE7E0A954837E442B07C5B09D6",
+    "Length": 1276,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/bing-mark.png",
+    "Sha256": "3AC9B35D22FE157A25AFA94E19CBA7E012DE21DE4520BBAC6E19A6BA00AD8978",
+    "Length": 347364,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/library-landscape.png",
+    "Sha256": "56AB2E760EC4CC7109B6B7727A2C89614129C61503DD33AC43E345FAEC27B8EB",
+    "Length": 2980607,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/mango-mark.png",
+    "Sha256": "205EBCB75008144C86FE95FE5A19A7C54794A9F10F88397539CC59417F094A3F",
+    "Length": 625270,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/UiIcons.xaml",
+    "Sha256": "3B873E6ECE8C43147CE849AC1D30292B54830CDDC42A1C924E6EE3E7E0C33B28",
+    "Length": 17419,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/vesper-mark.png",
+    "Sha256": "6794BDE52CF4CE6F0BF4F5534700A80EAFAC28B9CD58F8B4043DB99C688E52DA",
+    "Length": 1182198,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/vesper.ico",
+    "Sha256": "B7EA37318344D42583B51C9FB209D12EFC0AF12BE1EAAD9DE44BF66657EA07BD",
+    "Length": 80922,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconChart.svg",
+    "Sha256": "44E332D90A99999F6CB77289DB2A141E11C67C297C770DB8BF0B01AFB5C9A242",
+    "Length": 1220,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconCheck.svg",
+    "Sha256": "CD4D76F04F28599229E7D7B50833093BE05FB829874D7331CA86DAD375730A2B",
+    "Length": 449,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconClock.svg",
+    "Sha256": "4F6620B3E8589B40ABDFBD998DB7B66C384B33D5DE1068D9A5F15907861EE1B2",
+    "Length": 636,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconGame.svg",
+    "Sha256": "397807C023DFF00C09D11AC1361938FE28AA1BEDAFB1AD239D3DCF91FD247439",
+    "Length": 1320,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconGlobe.svg",
+    "Sha256": "CEB81D6A7089971B3A728DA453834970849CCA5A6B6CB4D836BBAE4ED6F539D6",
+    "Length": 1896,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconInfo.svg",
+    "Sha256": "6393FD90F6F4D006DB8C88B0C21C32A6AFEBC0DFD88352C14B75A220356055B9",
+    "Length": 791,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconSettings.svg",
+    "Sha256": "198BF6561713B3D7E1F7DD3BB4E139410C40AE6C0BBB4904546BAD9EFD7B83A7",
+    "Length": 3280,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/IconShield.svg",
+    "Sha256": "6162DC5BB5F24E5877BD4DD952E2F3EB18188304FD32C7DFF2D732D8F8FBD10F",
+    "Length": 620,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/LICENSE.txt",
+    "Sha256": "F71D234963F239D5DC795F75ED337A709D6CC332C478CFB67DCF1BB8F37225EA",
+    "Length": 1079,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Assets/Fluent/SOURCES.txt",
+    "Sha256": "66E3682CF738B7BC00A1BFD68EACACD56828456B9535BE7688453F8D31EADFEE",
+    "Length": 1829,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/CheatSession.cs",
+    "Sha256": "446DC856C2F097FC37B715004AA86D729F6C0083D2BAADA718DB08038F910C7F",
+    "Length": 6271,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/CheatTableDocument.cs",
+    "Sha256": "044E6A091DC3507902066B9CD04B7B5871BBFFC746152ACAD235FA0C0B8D3D69",
+    "Length": 8194,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/IProcessMemory.cs",
+    "Sha256": "D1F4896F98C910D58388901F758FD500FCAFCF199112FAC5A5B640339F190A2F",
+    "Length": 413,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/MemoryAddressTable.cs",
+    "Sha256": "0CDB1912A35047BB1A2EA76E1B3ADCD917CF0ED12E2ECB4F4423816E744396B3",
+    "Length": 14417,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/MemoryScanner.cs",
+    "Sha256": "1BCD032D0F2908966D97978E1440B972929995898242DDE4F914F918752F3B10",
+    "Length": 5163,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/MemoryScanWorkspace.cs",
+    "Sha256": "B1A13CC6ACC9E130FB41AF58BBCA7427D617558022BA440D474BEA6353B10505",
+    "Length": 9561,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/Cheats/Win32ProcessMemory.cs",
+    "Sha256": "6A2BD882C129FF43494AF5C38C56C496672D99482394F926654B904D17C09635",
+    "Length": 5566,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalCaptureFactory.cs",
+    "Sha256": "28D35F3F3DFBDAF403D6FC58D9CB28E90ABE67C90DC57CEF4B4C849769A2215E",
+    "Length": 2421,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalFrameRules.cs",
+    "Sha256": "C675CDC33DD1A372024815DBD225C3D1F0482A78AA611053D0BD3EECC0CFCAF3",
+    "Length": 3384,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalOcrContracts.cs",
+    "Sha256": "F202B510716C5D199F664E396A41EC7FAA9D7474C0BCCE8FAAFCBC240ADC7B04",
+    "Length": 3460,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalOcrController.cs",
+    "Sha256": "4085E5452E3854337601146BD0FCE91B7615CDA6CC9176DCBCE350B41DA56EAA",
+    "Length": 24686,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalOcrControllerFactory.cs",
+    "Sha256": "3B812D806EE2B86C79E0D7690C473A9E033F967634B8D79520636F13E74F840D",
+    "Length": 1075,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalOverlayLayout.cs",
+    "Sha256": "AF16F41E089EDA980BBED365AD323413F6E484CE448A146F0944690DF571221C",
+    "Length": 4157,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalOverlayPresenter.cs",
+    "Sha256": "EFCE35DF81B0F68376E8DAAEECF4F42E9BE6DABFDD7965DB263C759145569C1A",
+    "Length": 10986,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/ExternalOverlayWindow.cs",
+    "Sha256": "EC73ACC406B415729E91710343FE26F845895715A09F831701B93AAFB78CB4E7",
+    "Length": 4301,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/F9EventBuffer.cs",
+    "Sha256": "959949C0A441D94D0930286BB99BE74B60B5D7CCD64735E8389CEAFAE11CFD95",
+    "Length": 1786,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/GraphicsCaptureInterop.cs",
+    "Sha256": "9037F813DAA82E2DE0EAC8BA066535B4090380719C1469D0A5EC1D5C4E5328D3",
+    "Length": 3469,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/OcrModeSelector.cs",
+    "Sha256": "F59FE5049F10AFAC34D6A5502B853E99CB2049FFA7CBDE4958F584F26D03BCBE",
+    "Length": 566,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/OverlayWindowNative.cs",
+    "Sha256": "C1C9F98C41FCB2A6433630C286D712BD666411F097112FA8F3A06BF08E1E90F0",
+    "Length": 3756,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/OwnedOcrFrame.cs",
+    "Sha256": "CC16B7AB18F635237C3600CB685859BB4304283183B32D605445DEF7A2349911",
+    "Length": 3563,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/WindowsF9Source.cs",
+    "Sha256": "8A43354BC43E27D07B32EC087CECC962830F9A7B135F2B9EA25FC36D91F6125A",
+    "Length": 5795,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/WindowsGameWindowTracker.cs",
+    "Sha256": "C2014A3A98411661BB0C5C172F3D53AD6B5BDB981641A8C4069FF209A55F0D18",
+    "Length": 4805,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.App/ExternalOcr/WindowsGraphicsCaptureSource.cs",
+    "Sha256": "7803399D0A6310279841D8129663C5FEF64D9CC1264304A0C07CE61E9AB9109D",
+    "Length": 13431,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/AppSettings.cs",
+    "Sha256": "5FF8CCF8C0718DA37A9BA69C09A89342C1401209A15AF22A52F86E1558144760",
+    "Length": 11003,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/CjkCharacterSet.cs",
+    "Sha256": "5017CC5A9BE76AB59FE244FE6D1677C44B891A35E9924A66AF4D3356533FF431",
+    "Length": 38036,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/ComponentVersionCheck.cs",
+    "Sha256": "B4AC4EF877B3413CCCC0FF106CF0AEABEBE9DF176344C180A9B39E284D5D9E04",
+    "Length": 1917,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/FontAssetPipeline.cs",
+    "Sha256": "4B024BF67BA34387E4C23602D095B9AFBDC5FA41CE28D1AC01990388119B3675",
+    "Length": 14395,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/FontReplacementPolicy.cs",
+    "Sha256": "C7EBC4D931F01C1DBC5C817809B8C67182C5F0C3FA97A26B8D9B3C8B327250C0",
+    "Length": 7935,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/GameDetector.cs",
+    "Sha256": "798104ADC2EF8E1BADB91B838DA38C840A063740A1FDCF9E2C5A38CFC1E5403D",
+    "Length": 4249,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/GameProfile.cs",
+    "Sha256": "E1DE26C83E41724A0DDB1EBB98C07BF08374F228B996BA502ADA4AA5BA725ED3",
+    "Length": 3443,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/GlyphBatchAccumulator.cs",
+    "Sha256": "A29FF565F99606C717F595E3AC9C88AC7223555BD4FE741AAD764D7C693DDA98",
+    "Length": 5561,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/InstallManifest.cs",
+    "Sha256": "728443FC75C9B560AA38C04A83632CDDF1909FA283C85681186A97563BDEC522",
+    "Length": 2646,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/InstallPlanner.cs",
+    "Sha256": "02ADE0BDA10D8A02DE87459C0A89E3D0A331E386FF461AC9FD8343E2C6D31EA9",
+    "Length": 22504,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/LoadFaceOverloadSelector.cs",
+    "Sha256": "036F5309501AE7463EBB0A0438ED13732A3D279272EA617F6DCD0EB0E84C4E58",
+    "Length": 5951,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/OcrOverlayWire.cs",
+    "Sha256": "1D8E253A7CE5FCA7D2D828127E8773ADF0E695FB3CBF30C9D0D9C7C7B94F0F1E",
+    "Length": 6311,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/OcrRegionFilter.cs",
+    "Sha256": "1369CCFD611AA9CE15C4844D2F3D1DF21AC3FED22B6D6B57E0FD6BC87B4373C5",
+    "Length": 1570,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/OverlayTextLayout.cs",
+    "Sha256": "ECBA9AE2BF577B862E0E3EDB456CE36DD62A5923D57BF73555CDACE95F10B0C7",
+    "Length": 9872,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/PreloaderFailureDetector.cs",
+    "Sha256": "66E3529055908E4D679EDC30E8D5FEF80EC28D716DB9C074993BBFD80BE61D61",
+    "Length": 5374,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/ReflectionTextLayout.cs",
+    "Sha256": "94843D41F16F040006264A578F4F56890140D956BF55A55800A6848BA0FC3062",
+    "Length": 9237,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/ReplyGate.cs",
+    "Sha256": "068BF6F0FD3199535C6D2B40311373ED5AE5E0BF0B992C91B3A943A1A8C214E3",
+    "Length": 4185,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TextSafety.cs",
+    "Sha256": "24B33DBAF125F83B9109EED91267A253BB4335FFEF3096828A15A625AE86E27B",
+    "Length": 3669,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TextSelectionPolicy.cs",
+    "Sha256": "C076DCCD006DB4294480E82AC13303F49B007A57E1A7D2245BBCBE2F0A2AC7D5",
+    "Length": 4920,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TextTracker.cs",
+    "Sha256": "9BC628CD05EFC8CC72A3C78C7010F632C8A65D1EEE3BB3A46ED751B843FEFCEC",
+    "Length": 1450,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TranslationContracts.cs",
+    "Sha256": "6B95837CE75EE1915B464A6B3314A5A436A00D746D850A5BC738FF7B426A2C35",
+    "Length": 321,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TranslationDebounce.cs",
+    "Sha256": "37423B30A0CC2F0E0AB7E7C970FA708CCC4F61E3A1A89AB5A53F6C20616766D9",
+    "Length": 3413,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TranslationFontSizePolicy.cs",
+    "Sha256": "B7D9755015995BC77212CE71A4F4C182DD0AE87D4DB573453DF7F1C5238CEEB6",
+    "Length": 1195,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/TranslationStore.cs",
+    "Sha256": "9C4153C56151447AE42AA813A5C5B7A912FA30BDB256A1E2FE45A69A0623B644",
+    "Length": 8482,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/UnityMemberReader.cs",
+    "Sha256": "54B48F264AB894142141A22C0F224621AB3B4B32E06A89E7B7D03017C6FF1C6D",
+    "Length": 4409,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/UnityReflection.cs",
+    "Sha256": "65953AC95C9C46CDC4C0DB0F9EE2BC62E80895D59D885B09705ED25505ECCD5D",
+    "Length": 24991,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/UnityTranslator.Core.csproj",
+    "Sha256": "80E8CCE02C63C23F2A2D22C15D049162A7695D4657A6525B14467B785FF6905F",
+    "Length": 326,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/CandidateRanker.cs",
+    "Sha256": "AE41239F5D5A0E2ADBEDDED2DB5167607BC47DAF998A1D85B7FBA170E39452B1",
+    "Length": 2170,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/CheatPresetStore.cs",
+    "Sha256": "770ABCDC1F3737505B1755A97944734B3B8F27F3A312E52F79DD3A3FA05B7777",
+    "Length": 10737,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/CheatProtocol.cs",
+    "Sha256": "D24D0383554183F84C17309F80A4C7D0460B5D9D468955E0E62DC21A723FAEEE",
+    "Length": 14531,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/CheatTypes.cs",
+    "Sha256": "BAEF65ABCBEE49A7642848B0CE581BFC0916D91613B1805E3B46A9B9AE7BBFA8",
+    "Length": 211,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/CheatWire.cs",
+    "Sha256": "5DD05A91817E8A5B2BD2C8CB77D166E78D00149216D6F0E8F5F6348F955B0936",
+    "Length": 2631,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/FieldWriteGuard.cs",
+    "Sha256": "41DBE7D06477C53E4A031125717F0662772C4C4E20DC92ADB922276C6151EB20",
+    "Length": 7512,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/ICheatProtocol.cs",
+    "Sha256": "0EE886198F211706BA0F06EDC4A0A5BECCC1EB15635F2F001EF0C5D9242712AD",
+    "Length": 1720,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/MiniJson.cs",
+    "Sha256": "F1C26C34F26D7758D82798CA8FAB5942A58AB37F136C0E2E04E2CB2A4AD552F4",
+    "Length": 13070,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/NetStandardPolyfills.cs",
+    "Sha256": "14A0F119BFA5AF0A3A6371786543A98F5AA2E9A37FCE85AC6851D33F9DDFDDBE",
+    "Length": 460,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Core/Cheats/NumericValue.cs",
+    "Sha256": "B1B6C4B9EF53C9520712874B1F2A9B1057DF78D3F7ABFF60169442340E6E1B94",
+    "Length": 11895,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/FallbackTextOverlay.cs",
+    "Sha256": "1D789AE150C2E65487C4764521D2ABBC6134F14181508B79112BB3FAF083F7BD",
+    "Length": 10869,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/FontFallbackLoader.cs",
+    "Sha256": "FB237CDDB186A8D28AA811D9A2E2C703D3E76E8AA212E8B7FCE738621E37C06C",
+    "Length": 23663,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/OcrCapture.cs",
+    "Sha256": "AAFEA77B0B0BB11E37FDCB8F22D726F151EF51C7261E32EB317C8CB22A0FCA74",
+    "Length": 12055,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/PipeClient.cs",
+    "Sha256": "2C0E4A0EE7BE62CE7149E7A0C94E95DFE4D8AAB9B443CC7E90FA1002090E3343",
+    "Length": 39467,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/Plugin.cs",
+    "Sha256": "CB828ADC535287915BD4260B7E929C3C2BA260078207108EB52BA1ED96FB7B12",
+    "Length": 97421,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/ReplacementPolicy.cs",
+    "Sha256": "0A953C942C2166B36FDCAB19E4AAB4B14564B6B6C09EC189B665CFCD18F65170",
+    "Length": 830,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/RuntimeCjkFontAsset.cs",
+    "Sha256": "5B6A7C7A330581D8583A273BB07C61EA3C79D87E5A3260CBF0EC3A91EE78FCF0",
+    "Length": 65483,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/UnityTranslator.Plugin.csproj",
+    "Sha256": "6D1C5F99F56D5A945785152A8171546F3BEC592DEB8916394B6A6E84673E0FD3",
+    "Length": 13819,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/Cheats/CheatCommands.cs",
+    "Sha256": "95D62D38B1A130047B9A2172C55B4F785BED6C04CD000D9B562E44A66DB3DC5E",
+    "Length": 4540,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/Cheats/UnityFieldProbe.cs",
+    "Sha256": "71DD252D89908D69160B0F9999ABB2CD9BBBE8A5DAB836A88CEF5F929753FAFC",
+    "Length": 15192,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/Slim/SlimNet35Polyfills.cs",
+    "Sha256": "9D132833DC41A4895390124C0CAC071AA7D98713EA89ED5C85231A3C40032EB0",
+    "Length": 2835,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/Slim/SlimPipeClient.cs",
+    "Sha256": "EFD9D3F5A3893C07F5E9C1551F628DFB264AB0D6F7B4E61AA26AE29A8A215D25",
+    "Length": 12210,
+    "Unmodified": true
+  },
+  {
+    "Path": "src/UnityTranslator.Plugin/Slim/SlimPlugin.cs",
+    "Sha256": "D5736046E58DDE8BA77F2C17096E022FF4EC0CCDA92471276F915ED477212360",
+    "Length": 8342,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/Assert-PluginHasNoNewtonsoftDependency.ps1",
+    "Sha256": "DF9AEE1068E59BCE0C40D227D16EE4E0829268D128C50F2EFD7BEEC21CF4B472",
+    "Length": 691,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/Assert-TmpKeepsOriginalFont.ps1",
+    "Sha256": "D526DA534F9F8C4F21F098F2C98DF49AE7353AADC9C810CEB2E20AAA613BF588",
+    "Length": 810,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/Assert-TmpMeasuredFits.ps1",
+    "Sha256": "ECEBEE5B1FD02BCB32FE401F0B69EC14E243041F3EA6B1B2983A72F5ACB33BE4",
+    "Length": 1132,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/Assert-TmpMenuKeepsLayout.ps1",
+    "Sha256": "2BAFB65100AF77F49E79D5FDA0303F38225055B7505DBC18962984FF25170EF0",
+    "Length": 1629,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/OcrWorkerUtf8Fixture/OcrWorkerUtf8Fixture.csproj",
+    "Sha256": "617145C0D070D482812A17BEDE30E776D83899AADF4D5BDDCD7820CBD25FFED9",
+    "Length": 575,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/OcrWorkerUtf8Fixture/packages.lock.json",
+    "Sha256": "CC6F7F7CD5B1712261D038B538C138379BCEBE9C312995B5F2B342B9BC573C3B",
+    "Length": 4340,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/OcrWorkerUtf8Fixture/Program.cs",
+    "Sha256": "418F5C01CDE78A8AE9F9C45F68F6389A7E2FC6227003CB05BCCD3D4B44DEF440",
+    "Length": 2687,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/PortableNumericProbe/PortableNumericProbe.csproj",
+    "Sha256": "0CCBF7AF5CC51A3A48AB4129A3045DFF07A25CC8AF49686DC23C79E3CD05370B",
+    "Length": 511,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/PortableNumericProbe/Program.cs",
+    "Sha256": "0DD3DC8CA96B31FCAC31869A23F8C86D6394B165809C6B79CFE914398CDC9204",
+    "Length": 1510,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/RuntimeLayoutProbe/Probe.cs",
+    "Sha256": "745D9F20E95523E8BE060D93EF843F1E0650BAC3747660E956AD22897DC2475D",
+    "Length": 12910,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/RuntimeLayoutProbe/ReplyHost.ps1",
+    "Sha256": "EE77DBBECB5C3E4B00257B99DF0562A9C55BB051E8AE1C3C1653D113937B89CF",
+    "Length": 1366,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/RuntimeLayoutProbe/Run-Probe.ps1",
+    "Sha256": "03EDF76E1685A8FD9F52AAC14D5BBD57AAA537C571886DFED3AD9D2220832117",
+    "Length": 3220,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/RuntimeLayoutProbe/RuntimeLayoutProbe.csproj",
+    "Sha256": "8527E813F3D9F47FEEADA2C3586F29CB75E22A54CB3A8774E936A127FC26C373",
+    "Length": 1431,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/BingFreeTranslationClientTests.cs",
+    "Sha256": "5666F76BC6879D67D085A8F275B7503E4C0168FDECB6DFEF3939BA0411CFC446",
+    "Length": 18323,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/BrandIdentityTests.cs",
+    "Sha256": "3322AB97B4652919BF278585DAA354A16A9A6A15017D03DB32A3CB1080899449",
+    "Length": 5674,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/BundleInventoryTests.cs",
+    "Sha256": "E27C74E309D1C95F1F36C83197461D2821A48A9BB7D3CE7F8591CB9F8B1D737C",
+    "Length": 4936,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ChatTranslationClientTests.cs",
+    "Sha256": "CB13C6EF1A30812F89D2F19CCEAA6BD71D6175CBF40438C403C1873CB561A62F",
+    "Length": 9078,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ComponentNoticeTests.cs",
+    "Sha256": "01AF1115B6E493D9F37F345C0820A5FE776484AD408ED49E75908922C9B335A5",
+    "Length": 3161,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalCaptureFactoryTests.cs",
+    "Sha256": "6157C37D792A64BB7916453995C74174AAADDB876CC70B6348A2671818E99A72",
+    "Length": 2182,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalFrameRulesTests.cs",
+    "Sha256": "B08923DEB1921B8D7786FF9E3707C645AA8B181EE8F542B3D7D797437CD321B2",
+    "Length": 8641,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOcrControllerTests.cs",
+    "Sha256": "E228FBFC53C9FEEDF5D07581E2C9148F405A5A2E3E513C2E2D42FEF02BADDC0A",
+    "Length": 46388,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOcrFrameOwnershipTests.cs",
+    "Sha256": "DA56AA8616AE00AF961BA42EEEAFFC4F936E83E51058A1D2ADC097894EB61ED5",
+    "Length": 8061,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOcrMainWindowTests.cs",
+    "Sha256": "B1E8778D9AE4C5411DA7C8C8605411777E28F53D26F05A75E7A03DBF15E37AF8",
+    "Length": 17897,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOcrPolicyTests.cs",
+    "Sha256": "88A32855D90A24071B0E73206FB131B4442783916606AE6E7EFE5F611F4B0FB9",
+    "Length": 2313,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOcrTestDoubles.cs",
+    "Sha256": "BE7DBF973BCCA51CAE0AEE2794591E1934773036DA66D83311525D221CDED059",
+    "Length": 992,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOverlayLayoutTests.cs",
+    "Sha256": "A6212B0519F88295A421E655E5E4F1FB4E485617004D3238C660B42066CF900C",
+    "Length": 5356,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOverlayNativePolicyTests.cs",
+    "Sha256": "4B458D2C0FC7EB3FE0C72F479BA6868E17FE936F8416899351B69511028A0F3A",
+    "Length": 4054,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalOverlayPresenterTests.cs",
+    "Sha256": "538776BEB6D5BDAC4DB0699E7B757B2693AC9E05F6D99C17FE583F70C9753A41",
+    "Length": 19423,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalReleaseVerifierTests.cs",
+    "Sha256": "FE818A3F1FF9FDDFE6878A31504FF360C1CC6B49C22C8CEDA145EECCBF6DCF9C",
+    "Length": 8814,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ExternalWindowCaptureTests.cs",
+    "Sha256": "FD35E3E6D7A2F0A4016B39F821383C72F1ADEBF0831AEF8E23825D22D4D98F21",
+    "Length": 8133,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/F9EventBufferTests.cs",
+    "Sha256": "3FF8731839824F689236D668A3E701B8D68B9DB69BE38BE585A626358B992490",
+    "Length": 2929,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/GameLibraryManagementTests.cs",
+    "Sha256": "43EDC667C9AC672AFF36E2EB03F7DAD69928AA4692FCA86342DB169B8AEAC1B8",
+    "Length": 8792,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/GameLibraryTests.cs",
+    "Sha256": "401379605E85D6CAAB20408BDFD5FE4E96E1807C91219955369F44081765B985",
+    "Length": 1604,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/InstallDialogWordingTests.cs",
+    "Sha256": "A29F24D954846721C6D479BFFBD3ED647F1364A9BFC5F2696B8166C4B13482D3",
+    "Length": 3061,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LaunchUpdateTests.cs",
+    "Sha256": "5F6678D4CAD5A14FC22E1CCF3756D2EE58F319E30B1938A0C735DBA01D34C4F2",
+    "Length": 6089,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LibraryInteractionAppearanceTests.cs",
+    "Sha256": "AFD9F09285D7361D9A0D09E5F5FE27D817496A3669A823CF6EA42F049C8DB78D",
+    "Length": 12119,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LibraryPresentationTests.cs",
+    "Sha256": "FD3C8CB2A144CC690047A34D38BFCA82D0E51211A5AC4D76FF1A3A99D9D9A24B",
+    "Length": 11730,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LibraryTableLayoutTests.cs",
+    "Sha256": "6C8E7F443A53837A804A39BFC42A912736AC02A4523D7FA7D7B458E85F3D6CF8",
+    "Length": 11964,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LibraryWorkspaceTests.cs",
+    "Sha256": "41CE42ADB722F4BF38A42B1CC1320D6715E883BB23C4A5AC10069F39016949EB",
+    "Length": 15688,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LibreTranslateClientTests.cs",
+    "Sha256": "9BADCC1294FDCFF74DC009387AF04CFB5D16FA2469B2CB262DD0830B8299C378",
+    "Length": 1653,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/LoaderPreferencePersistenceTests.cs",
+    "Sha256": "20F0769690ABB74BDF7A747FEA5F8296C707FAA004AB7A719573A9E87B8707C9",
+    "Length": 7316,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/MainWindowAddGameTests.cs",
+    "Sha256": "0B3F43E365324D51A703D76685BEDE7F45FCE5196373F818D612A4C901E9ACB6",
+    "Length": 6654,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/NamedPipeHostTests.cs",
+    "Sha256": "CEC1F1CE718129F8ECC8EF55153D78E419F2B2B110523A66DD8BAD54F31559BB",
+    "Length": 3459,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/NativeCaptureExtentTests.cs",
+    "Sha256": "3FB4E6F02481A2C84F2E83881A8E289814601AF1922A47A3183C83DC8F5428AB",
+    "Length": 1494,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/OcrCapabilityTests.cs",
+    "Sha256": "8534052543EB0BE158BB25CED053A3597E47524040343A613E8A41CF3046FD57",
+    "Length": 17201,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/OcrFrameLifetimeTests.cs",
+    "Sha256": "2E748B1CD1413BD21DE160F370A00CDAA34264AB1E7EF765617B9BD6124E750D",
+    "Length": 10609,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/OcrTranslationServiceTests.cs",
+    "Sha256": "1EBE6FE1F6D74A85BC069AD7764592596EA5B981BBB55CCEC1B0B1D9AD7E6DCA",
+    "Length": 7205,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/OcrWorkerHostTests.cs",
+    "Sha256": "6A8467B3CA6DEA685F048ABDBEB2445DA9EEA1265953C6D3F4A164F96E07573B",
+    "Length": 841,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/OcrWorkerUtf8Tests.cs",
+    "Sha256": "CCFB7594AAF924BDAC7C3AAEB55CB79EF7FAC292A95FD5669309B4B3A7CDCF4B",
+    "Length": 6784,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/PackageCatalogTests.cs",
+    "Sha256": "94CCC2427FD9C2C6979F2C767E0312600FFE7DB619EB4D29015CCCC1B50721F2",
+    "Length": 7648,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/packages.lock.json",
+    "Sha256": "9C9B7B9468EAEB2AC7BD8F6A66EEC74FC75EF53994EC09A7AF088F6F6FE3AF65",
+    "Length": 49020,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ProviderCacheIsolationTests.cs",
+    "Sha256": "6CBC540A93EFBE70EF5353751973CB5EB633CFE33424EADFD13E3384F10CB39E",
+    "Length": 5205,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TestProcessRunner.cs",
+    "Sha256": "E58455DFA09DDC6AE9AB9BA29AB89502E37E334DFB8CB7E7D8C651A54B58DDC9",
+    "Length": 2025,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TestProcessRunnerTests.cs",
+    "Sha256": "9540CF6D89E1785C219A69910DE513404551006D8C6EF7063ABA127AF09692FB",
+    "Length": 1776,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/ThemeAppearanceTests.cs",
+    "Sha256": "66BBF46DD28EA514549AD77B19106836740586DDB268C976FE5C44ACE2DC0F16",
+    "Length": 49785,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TranslationCoordinatorConcurrencyTests.cs",
+    "Sha256": "172582A6C77EE89F7F764E436846DDF1A73CCF0DF91194D41237A38E48950042",
+    "Length": 14262,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TranslationCoordinatorTests.cs",
+    "Sha256": "1CFA8C701C62154AB3F495C62EFD5F374B5D670383C415404CF2FF6DF02871E1",
+    "Length": 11082,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TranslationProviderFactoryTests.cs",
+    "Sha256": "B4278BEA9E3B6F8C6C83AA1A800CD071775CCDD66DE490A669111A441C37D69C",
+    "Length": 11305,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TranslationProviderLaunchTests.cs",
+    "Sha256": "FDA3583DF6B802E4C259DFAF26C4306CB3490959FB2D0FC2573DCDC0EC6E2B14",
+    "Length": 5366,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/TranslationProviderUiTests.cs",
+    "Sha256": "2DD4A9EA42A7B3D3F0AA122D8F6F712DE76376916E791856652B6F38AEC8B2DA",
+    "Length": 28050,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/UiAVisionTests.cs",
+    "Sha256": "E9DDFF50F7716ABC29F22C43DB77101B7510F32CB68D9D3F91CEA55D20F38374",
+    "Length": 11101,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/UnityTranslator.App.Tests.csproj",
+    "Sha256": "142F68E36F7970F6A7B9BB415A2741B05F3B51AF5EBFDB49BBF79FB3821626DC",
+    "Length": 2102,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/WindowsF9SourceTests.cs",
+    "Sha256": "444E2B031A9F5BA9B5B1FFA8D5B6CBB822B1B5B721B5B87A8EB29015B588D844",
+    "Length": 3403,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/WpfUiCollection.cs",
+    "Sha256": "731A3444843A876CB8DF041F4BE6C9EA0D7D6CB4B8E01C6183B865215E909538",
+    "Length": 2797,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/BuiltInWorkspaceUiTests.cs",
+    "Sha256": "4682E3F65637D370B1F5B42FC3B91C0C2542503FCD72BC98F167069997C8E17D",
+    "Length": 4520,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/CheatPipeTests.cs",
+    "Sha256": "084D156959B88467FC1C29B4D3274AA0D5D35C5663B189CCD65CB9590C249700",
+    "Length": 14996,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/CheatSessionTests.cs",
+    "Sha256": "07153B80B53E075F92F7603EB478EA10285B606584F7FE223EDE23C0A944D194",
+    "Length": 4451,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/CheatSessionUndoReadbackTests.cs",
+    "Sha256": "426E76C6FB06AD02C97B06D60C0A16B1FCE75011B993AC7D5EEDD61C7BCEBCC9",
+    "Length": 3829,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/CheatTableCompatibilityTests.cs",
+    "Sha256": "4F069C26282AFBCC02E378BB7F53B596EC2C2E3E4196F7D7832CCCDA242D5BB9",
+    "Length": 7502,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/CheatWorkspaceTests.cs",
+    "Sha256": "69487D45BF3E7D133CBC54161DE730A988A316DD15869087AF20478EC90076BD",
+    "Length": 15551,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/EmptyStateAndTakeOverTests.cs",
+    "Sha256": "C6F42B042248D69AD82F5C143039966475132FD9A4F8A6B7A6556242BFC5BFEC",
+    "Length": 29031,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/ExternalProcessMemoryTests.cs",
+    "Sha256": "2ADB589B9202BD1A72854BD1196591335335ED71F973FE17FC0F6741D6997FA2",
+    "Length": 3895,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/MemoryAddressTableTests.cs",
+    "Sha256": "F261068989BC1BDFA9AE62D66E06D45A0968D47FBAE6635F45369AF1121CA5CA",
+    "Length": 10237,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/MemoryScannerTests.cs",
+    "Sha256": "368DD54DBBA51C7F69E4A65E1B158766EC833440BAD6F75EA03B53F8C49FCC1E",
+    "Length": 4793,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/MemoryScanWorkspaceTests.cs",
+    "Sha256": "C79D2E4EFD66ED543712F99E5DBEE161984DF41460D9C9A8D4AB20D4506866C0",
+    "Length": 3985,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/ScanRefineFlowTests.cs",
+    "Sha256": "4FE6F95375CCE6177E959A9B10FF5EF29A58CB8DB2872E96BE99B05234DC4710",
+    "Length": 15690,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/ScanResultBindingTests.cs",
+    "Sha256": "D62841EC0A126A61C2B607151542453E4505E2073EA85B85AB9D6B8DD5EAFF99",
+    "Length": 8755,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/ScanUndoUiTests.cs",
+    "Sha256": "1F701CBA30EF4D0E7FB7D126D20A92D916B1EC0AC271B580456685A9DB9508FA",
+    "Length": 9444,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/UiWordingTests.cs",
+    "Sha256": "AC4FB08E17AA43AF98D6EB0F5F6C2224B3FA56AA6E3F53B02D7586F74F41430A",
+    "Length": 12847,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.App.Tests/Cheats/Win32ProcessMemoryTests.cs",
+    "Sha256": "14B9A0FA000F86CB6DFA7ACEA927D1DFC4986CCA1A158FDCBCDA94DCC63D5B3F",
+    "Length": 1111,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/AppSettingsTests.cs",
+    "Sha256": "C803C0C294193E825F972B546CD127C1BCF5A7A0307DCEBCA2B1333FC71632F8",
+    "Length": 5071,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/CjkCharacterSetTests.cs",
+    "Sha256": "D404849A3312CF8C2BC0344FD0ED04FDF80668DBC3C360BAA62C5FF035263C87",
+    "Length": 12372,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/ComponentVersionCheckTests.cs",
+    "Sha256": "395BCCCB9155039CFC40AA7FE5F128B666D5E15FD7CCC945F427F9AFBFC31D48",
+    "Length": 9138,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/FontAssetPipelineTests.cs",
+    "Sha256": "9FC5BB224AB3B2E4520E26934DEA8BF3F3539D09E701078DD047E3DB80FFFD5F",
+    "Length": 12767,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/FontMetricsScaleTests.cs",
+    "Sha256": "0730D9612C68A5A3931F392104E04FFB38D4D8CB1BF56762F26AC5B84DF8BE5B",
+    "Length": 5329,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/FontReplacementPolicyTests.cs",
+    "Sha256": "D575379356EEC64505F7F94E83AA228FFA8E42CB6BB7B75D4AE38F8A762FF1EC",
+    "Length": 11714,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/GameDetectorTests.cs",
+    "Sha256": "850504D476A54C7BC17ECA0E5F189E4492115A4FC3EE14ECE02CD74D03D5589C",
+    "Length": 4092,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/GlyphBatchAccumulatorTests.cs",
+    "Sha256": "70539A32C3B509E0CB85F4AA25E0F9F192976A95F801F8A70AF16F00CE20A3FC",
+    "Length": 6989,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/InstallPlannerTests.cs",
+    "Sha256": "5BBC9370E69266D9FFF9EB2281A391FB2559F3B51B7762FE0111C35F0FC47EE3",
+    "Length": 7611,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/LoaderSwitchTests.cs",
+    "Sha256": "13ADF8909942DA8F95D55CF8788969B7AC369E7C257FF7EBC46005FD062B576E",
+    "Length": 10676,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/LoadFaceOverloadSelectorTests.cs",
+    "Sha256": "F8718E07C1081444C879AF051317C7E26FE3B794954FC9DE49963027188CB090",
+    "Length": 7737,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/OcrOverlayWireTests.cs",
+    "Sha256": "DC24CA0A759649CAF9562991893B86B7E00E41C19FE1302FCE87E1F983726471",
+    "Length": 6423,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/OcrRegionFilterTests.cs",
+    "Sha256": "49FDA1061483021F2218D884B1B654156FC1F10E82767F0AB7AFB235B11D36FF",
+    "Length": 954,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/OverlayTextLayoutTests.cs",
+    "Sha256": "6974DBAC31E09A668106511587361BC2E6E3268C6DD6FF15F8187C132AE4E5B2",
+    "Length": 14761,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/PreloaderFailureDetectorTests.cs",
+    "Sha256": "82B7AC715540EA290A389633B08CF67D3798B73283989CF38D061AA4C278CBE0",
+    "Length": 8620,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/ProviderSettingsTests.cs",
+    "Sha256": "B7C457C8EC614E80D6B7DDCF9DC9949E19E0136DE6B7631A1BE525A0C978D86C",
+    "Length": 8373,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/ReflectionTextLayoutTests.cs",
+    "Sha256": "9429922AE3418B257DB2769698D13059E9A87CDF036B8B5026CF60FBE0F65964",
+    "Length": 7954,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/ReplacementPolicyTests.cs",
+    "Sha256": "9CF728C7387A424AD5F8EBF60AC363A61BED181B271BCC714A93D6F96D17EF40",
+    "Length": 1302,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/ReplyGateTests.cs",
+    "Sha256": "4C37984FEA074E6948F59CD790250AF6B2D07D79B24C3843172C36E94E33159A",
+    "Length": 2421,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/TextSafetyTests.cs",
+    "Sha256": "161EE591B79D1D510CDD6FEC87F31E9CBDD035C527E4E9178FAA0536456F7866",
+    "Length": 2706,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/TextSelectionPolicyTests.cs",
+    "Sha256": "7B54070D2EC07619DC276374F6895CB508F6C6CF270E1116A52CB6FD47733482",
+    "Length": 5480,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/TextTrackerTests.cs",
+    "Sha256": "89DFFBC993D00FE6481AED4432F7F02FEE880530EA9996A477D2605EEA420A23",
+    "Length": 941,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/ThemeSettingsTests.cs",
+    "Sha256": "920ABAAB04B52B2853778D0C34052295F0267B924928AA26AE3013A969BC5DA2",
+    "Length": 9081,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/TranslationDebounceTests.cs",
+    "Sha256": "A212C6C43AF6D9F65630F94AE8B054B167980E3FC9452BFD489D43CB7EB78535",
+    "Length": 5365,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/TranslationFontSizePolicyTests.cs",
+    "Sha256": "7D424CC5A0ADC2E897D528AA6476DA84D62A475DE09CAEB9BB1BA960D1B2B65C",
+    "Length": 843,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/UnityMemberReaderTests.cs",
+    "Sha256": "3E18D3B69427F3896BD5984B153E111BF061DA376CADE65A2ED7226B90AF81EF",
+    "Length": 4898,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/UnityReflectionActivityTests.cs",
+    "Sha256": "E0A67B225E220B1A3A90799897C95C4DF6BCA79A9F6DCE775147FCEE5D2DDD59",
+    "Length": 4816,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/UnityReflectionInteropTests.cs",
+    "Sha256": "5E6F5DA8D14DBE959CCBF42E17F16ECDD7C0C408296ABB3561F836CC501EA7AC",
+    "Length": 7349,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/UnityReflectionTests.cs",
+    "Sha256": "664315B947244ACB898E3FB760C54B8A9652091F2D1B4CC69C78B81289AF7CA2",
+    "Length": 13018,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/UnityTranslator.Core.Tests.csproj",
+    "Sha256": "5D4326FBAF2543129ACC2114625BAB6E961ECB45446835730B05389C765796A3",
+    "Length": 911,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/Cheats/CandidateRankerTests.cs",
+    "Sha256": "03584575D28797D8979D23A2881FC4CE068A6722D4451C134F5541C04D37B9C8",
+    "Length": 1490,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/Cheats/CheatPresetStoreTests.cs",
+    "Sha256": "3BB52E60A4003F15720F283A5C162B7185A2898AD937BB858C9EC0E5167D6109",
+    "Length": 8651,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/Cheats/FieldIdentityTests.cs",
+    "Sha256": "5886C016B6AF9F25A2D163852852DA10E32DA16D7A5943A58FDE12DD9B714B30",
+    "Length": 8724,
+    "Unmodified": true
+  },
+  {
+    "Path": "tests/UnityTranslator.Core.Tests/Cheats/NumericValueTests.cs",
+    "Sha256": "9A034DBC2F8CBCB1619A2D53094E91516E3AAE2079FCF3812118D79360E9FF32",
+    "Length": 2022,
+    "Unmodified": true
+  }
+]

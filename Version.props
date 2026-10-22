@@ -1,0 +1,23 @@
+<Project>
+  <!-- 版本号的唯一来源。改这里就等于改了：
+       - 生成的可执行文件 / 程序集版本信息（FileVersion、ProductVersion、InformationalVersion）
+       - 软件界面左下角显示的版本
+       - 打包脚本输出的候选版文件夹名与说明文件
+       以下项目都通过各自的 Directory.Build.props 引入这个文件，保证软件内外一致。 -->
+  <PropertyGroup>
+    <AppVersion>6.1</AppVersion>
+    <VersionPrefix>$(AppVersion)</VersionPrefix>
+    <FileVersion>$(AppVersion).0</FileVersion>
+    <!-- AssemblyVersion 只能有 4 段（major.minor.build.revision）。
+         以前这里写的是 $(AppVersion).0.0，AppVersion 是两段时刚好凑成 4 段；
+         一旦升成三段（0.5.1）就变成 0.5.1.0.0 直接编译失败。改成补一段，
+         两段和三段的 AppVersion 都能用。 -->
+    <AssemblyVersion>$(AppVersion).0</AssemblyVersion>
+    <InformationalVersion>V$(AppVersion)</InformationalVersion>
+    <Product>Vesper暮星</Product>
+    <Title>Vesper暮星</Title>
+    <AssemblyTitle>Vesper暮星</AssemblyTitle>
+    <Company>Vesper暮星</Company>
+    <Copyright>Vesper暮星</Copyright>
+  </PropertyGroup>
+</Project>

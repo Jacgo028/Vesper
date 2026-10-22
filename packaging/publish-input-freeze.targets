@@ -1,0 +1,15 @@
+<Project>
+  <!-- Captures the actual post-transform FilesToBundle in this invocation. Never invokes another publish. -->
+  <Target Name="FreezeExternalOcrBundleInputs" BeforeTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(MSBuildProjectName)' == 'UnityTranslator.App'">
+    <Error Condition="'$(ExternalOcrFreezeRoot)' == ''" Text="ExternalOcrFreezeRoot must be an absolute fresh directory." />
+    <Error Condition="!$([System.IO.Path]::IsPathFullyQualified('$(ExternalOcrFreezeRoot)'))" Text="Freeze root must be absolute." />
+    <Error Condition="Exists('$(ExternalOcrFreezeRoot)')" Text="Freeze root already exists; do not overwrite evidence." />
+    <Error Condition="'$(PublishSingleFile)' != 'true' Or '$(SelfContained)' != 'true' Or '$(RuntimeIdentifier)' != 'win-x64' Or '$(EnableCompressionInSingleFile)' != 'false' Or '$(IncludeNativeLibrariesForSelfExtract)' != 'false'" Text="Required external OCR publish flags are missing." />
+    <MakeDir Directories="$(ExternalOcrFreezeRoot)" />
+    <GetFileHash Files="@(FilesToBundle)" Algorithm="SHA256">
+      <Output TaskParameter="Items" ItemName="FrozenBundleInput" />
+    </GetFileHash>
+    <Copy SourceFiles="@(FrozenBundleInput)" DestinationFiles="@(FrozenBundleInput->'$(ExternalOcrFreezeRoot)/%(RelativePath)')" SkipUnchangedFiles="false" />
+    <WriteLinesToFile File="$(ExternalOcrFreezeRoot)/publish-inputs.tsv" Lines="@(FrozenBundleInput->'%(RelativePath)&#x9;%(FileHash)&#x9;%(FullPath)')" Overwrite="false" Encoding="UTF-8" />
+  </Target>
+</Project>
