@@ -1,4 +1,7 @@
-# Vesper暮星
+# Vesper暮星｜源码仓库
+
+> **这是开发者源码仓库，不是软件安装包。**
+> 普通玩家请前往 [Vesper-Releases 软件下载仓库](https://github.com/Jacgo028/Vesper-Releases)，下载 [EXE 安装器](https://github.com/Jacgo028/Vesper-Releases/releases/latest)。
 
 Vesper 是面向 Windows x64 Unity 游戏的翻译器，帮助玩家减少语言障碍、享受游戏。此仓库为 Vesper-6.1 的产品源码，包含桌面程序、Mono／IL2CPP 插件与自动化测试。
 
